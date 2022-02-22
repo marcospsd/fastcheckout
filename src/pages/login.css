@@ -1,0 +1,44 @@
+#login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0 2rem;
+    background-color: #D8222A;
+
+
+}
+
+#login .form {
+    background-color: #e7e2e2;
+    width: 100%;
+    max-width: 500px;
+    padding: 0.5rem;
+    border-radius: 5%;
+
+}
+
+#login .field {
+    padding: 2%;
+    background-color: #e7e2e2;
+    border-radius: 5%;
+}
+
+#login .actions {
+    padding: 5%;
+
+}
+
+#entrar {
+    background-color: black;
+}
+
+img {
+    display: flex;
+    padding: 1.5rem;
+    width: 400px;
+    height: auto;
+    max-width: 100%;
+
+}
