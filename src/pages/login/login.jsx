@@ -7,6 +7,7 @@ import LogoDNZ from '../../statics/logodiniz.png'
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import InputAdornment from '@mui/material/InputAdornment';
+import { Alert } from "@mui/material";
 
 const LoginPage = () => {
     const { authenticated, login} = useContext(AuthContext);
@@ -16,8 +17,9 @@ const LoginPage = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        login(username, password);
+        login(username, password)
     };
+
 
     return (
 

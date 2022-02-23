@@ -1,0 +1,90 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #D8222A;
+    padding: 2%;
+
+
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 5%;
+ 
+}
+
+.Diarios {
+    display: flex;
+    flex-direction: column;
+}
+
+.vendas-container {
+    width: 100%;
+}
+
+.view-venda {
+    background-color: rgb(206, 207, 207);
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); 
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.view-venda:hover, .view-venda:focus {
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 1), 0 1px 2px rgba(0, 0, 0, 1); 
+
+}
+
+.view-venda p {
+    margin: 0.2rem;
+}
+
+.view-venda #excluir {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    border: none;
+    color:#ffffff;
+    background: none;    
+    cursor: pointer;
+    line-height: 1rem;
+    font-size: 1.1rem;
+    font-family: sans-serif;
+    border-radius: 50%;
+    background-color: black;
+    padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+}
+
+.view-venda .itens {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+}
+
+.itens #veritems {
+    background: none;
+    color: white;
+    border-style: groove;
+    border-color: white;
+    font-size: 0.5rem; 
+}

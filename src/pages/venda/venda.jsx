@@ -18,3 +18,5 @@ const VendaPage = () => {
     )
 
 } 
+
+export default VendaPage;

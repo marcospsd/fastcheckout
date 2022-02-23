@@ -1,6 +1,8 @@
+import { WindowSharp } from "@mui/icons-material";
 import React, { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {api, createSession } from "../services/api";
+
 
 
 
@@ -11,6 +13,7 @@ export const AuthProvicer = ({children}) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const recoveredUser = localStorage.getItem('username');
@@ -25,8 +28,13 @@ export const AuthProvicer = ({children}) => {
 
 
     const login = async (username, password) => {
-        const response = await createSession(username, password);
-        
+        try{
+        const response = await createSession(username, password)
+        if(response.status !== 200){
+            setError('Deu erro no coisa');
+          }
+        console.log(error)
+
         const loggedUser = response.data.nome
         const token = response.data.token
 
@@ -37,8 +45,10 @@ export const AuthProvicer = ({children}) => {
 
         setUser(loggedUser);
         navigate("/")
+        } catch(e){
+            window.alert("Login ou senha Incorretos")
+        };
     };
-
     
     const logout = () => {
         localStorage.removeItem("username")
