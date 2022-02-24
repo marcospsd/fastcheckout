@@ -1,4 +1,3 @@
-import { WindowSharp } from "@mui/icons-material";
 import React, { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {api, createSession } from "../services/api";
@@ -30,11 +29,9 @@ export const AuthProvicer = ({children}) => {
     const login = async (username, password) => {
         try{
         const response = await createSession(username, password)
-        console.log(response)
         if(response.status !== 200){
             setError('Deu erro no coisa');
           }
-        console.log(error)
 
         const loggedUser = response.data.nome
         const token = response.data.token

@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 export const api = axios.create({
-    baseURL: "http://127.0.0.1:8000",
+    baseURL: "http://10.3.1.95:8000",
 });
 
 export const createSession = (username, password) => {
@@ -13,9 +13,9 @@ export const getVendas = async () => {
     return api.get("/api/v2/venda/");
 }
 
-export function deleteVendas(id) {
-     api.delete(`/api/v2/venda/${id}`);
-}
+export const deleteVendas = async(id) => {
+    return api.delete(`/api/v2/venda/${id}`);
+     }
 
 
 /// SWR

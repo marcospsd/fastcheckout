@@ -24,7 +24,7 @@ const LoginPage = () => {
     return (
 
         <div id="login">
-            <img src={ LogoDNZ }/>
+            <img src={ LogoDNZ } id="imgLogoDNZ"/>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="field">
                     <TextField fullWidth label="Usuario" variant="outlined" type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)}
