@@ -1,52 +1,50 @@
-import { getListSubheaderUtilityClass } from "@mui/material";
-import React, { useContext, useEffect, useState} from "react";
-import { useResolvedPath } from "react-router-dom";
+import React, { useContext} from "react";
 import { AuthContext } from "../../contexts/auth";
-import { getVendas } from "../../services/api";
-
+import { deleteVendas } from "../../services/api";
+import { useFetch } from "../../hooks/useEffect";
 import "./home.css"
 
+
 const HomePage = () => {
-    const { authenticated, logout } = useContext(AuthContext);
-    const [venda, setVendas] = useState([]);
-    const [loading, setLoading] = useState(true);
 
+    const user = String(localStorage.getItem('nome'))
+    const { data, mutate } = useFetch('/api/v2/venda/');
+    const { logout } = useContext(AuthContext);
 
-    useEffect(() => {
-        (async () => {
-            const response = await getVendas();
-            console.log(response)
-            setVendas(response.data);
-            setLoading(false);
-        }) () 
-    }, []);
+    if (!data) {
+        return <p>loading ...</p>
+    }
+
 
     const handleLogout = () => {
         logout()
 
     };
 
-    if (loading) {
-        <div className="loading">Carregando dados ....</div>;
-    }
+
+    function ModalVenda(id) {
+        if (window.confirm("Deseja apagar essa venda ?")) {
+            deleteVendas(id);
+        }
+    };
+
     return (
         <div className="container">
-            <h1>Bem Vindo Usuario</h1>
+            <h1>Bem Vindo {user}</h1>
             <div className="Diarios">
                 <label>Vendas: 3</label>
                 <label>Total Vendido: R$ 5000.00</label>
             </div>
             <div className="menu">
-                <button onClick={handleLogout}>Logout</button>
-                <button >Criar Venda</button>
+                <button onClick={() => mutate()}>Criar Venda</button>
             </div>
             <div className="vendas-container">
-                {venda.map((venda) => (
-                    <div className="view-venda" key={venda.ordem}>
-                        <p><strong>Ordem: </strong>{venda.ordem}</p>
-                        <p><strong>CPF: </strong>{venda.cpf}</p>
-                        <p><strong>Total da Venda: </strong>R${venda.total_venda}</p>
-                        <button id="excluir">X</button>
+                {data.map((data) => (
+                    <div className="view-venda" key={data.ordem}>
+                        <p><strong>Ordem: </strong>{data.ordem}</p>
+                        <p><strong>CPF: </strong>{data.cpf}</p>
+                        <p><strong>Total da Venda: </strong>R${data.total_venda}</p>
+                        <button id="excluir" onClick={() => ModalVenda(data.ordem)}>X</button>
                         <div className="itens">
                             <button id="veritems">Itens na Venda</button>
                         </div>

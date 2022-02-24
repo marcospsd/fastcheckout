@@ -16,7 +16,7 @@ export const AuthProvicer = ({children}) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const recoveredUser = localStorage.getItem('username');
+        const recoveredUser = localStorage.getItem('nome');
         const token = localStorage.getItem('token');
 
         if(recoveredUser && token) {
@@ -30,6 +30,7 @@ export const AuthProvicer = ({children}) => {
     const login = async (username, password) => {
         try{
         const response = await createSession(username, password)
+        console.log(response)
         if(response.status !== 200){
             setError('Deu erro no coisa');
           }
@@ -38,7 +39,7 @@ export const AuthProvicer = ({children}) => {
         const loggedUser = response.data.nome
         const token = response.data.token
 
-        localStorage.setItem("username", JSON.stringify(loggedUser));
+        localStorage.setItem("nome", JSON.stringify(loggedUser));
         localStorage.setItem("token", token);
 
         api.defaults.headers.Authorization = `token ${token}`
