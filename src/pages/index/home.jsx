@@ -8,6 +8,9 @@ import "./home.css"
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CircularProgress } from "@mui/material";
+
+import BasicModal from "../../components/Modal/modal"
 
 
 const HomePage = () => {
@@ -15,15 +18,14 @@ const HomePage = () => {
     const { data, mutate } = useFetch('/api/v2/venda/');
     const { logout } = useContext(AuthContext);
     if (!data) {
-        return <p>loading ...</p>
+        return <CircularProgress />
     }
 
 
 ////// Conversão para Reais dos dados da Api    
-    const Faturado = data.map(x => x.total_venda).reduce((a, b) => a+b, 0)
+    const Faturado = data.map(x => x.total_venda).reduce((a, b) => parseInt(a) + parseInt(b), 0)
     const Reais = parseInt(Faturado).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
     const QuantidadeTotal = data.map(x => x).length;
-    console.log(QuantidadeTotal)
 
     // const handleLogout = () => {
     //     logout()
@@ -31,18 +33,17 @@ const HomePage = () => {
     // };
     
 ///// Modal para Confirmação de Exclusão de venda 
-    const ModalVenda = (id) => {
-            if ( window.confirm("Deseja excluir essa venda ?")) {
-                deleteVendas(id);
+     
+    function AcaoDeletar (id) {
+        if ( window.confirm("Deseja deletar essa venda ?")) {
+            deleteVendas(id);
+            const refreshVendas = data.filter((venda) => venda.ordem !== id)
+            mutate(refreshVendas, false)
+        }
+    }
 
-                const deletevideos = {
-                    vendas: data.filter((venda) => venda.ordem !== id)
-                };
-                
-                mutate(deletevideos, false)
+///// Modal de Visualização de dados
 
-            }
-    };
 
     return (
         <div className="container">
@@ -67,14 +68,16 @@ const HomePage = () => {
             </IconButton>
             </div>
             <div className="vendas-container">
-                {data?.map((venda) => (
+                {data.map((venda) => (
                     <div className="view-venda" key={venda.ordem}>
                         <p><strong>Ordem: </strong>{venda.ordem}</p>
                         <p><strong>CPF: </strong>{venda.cpf}</p>
                         <p><strong>Valor: </strong>{parseInt(venda.total_venda).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</p>
-                        <IconButton aria-label="delete" size="small" id="excluir" onClick={() => ModalVenda(venda.ordem)}>
+                        <BasicModal>                        
+                            <IconButton aria-label="delete" size="small" id="excluir" onClick={() => AcaoDeletar(venda.ordem)}>
                             <DeleteIcon />
-                        </IconButton>
+                            </IconButton>
+                        </BasicModal>
                         <div className="itens">
                         </div>
                     </div>
