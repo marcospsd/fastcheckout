@@ -17,5 +17,6 @@ export const deleteVendas = async(id) => {
     return api.delete(`/api/v2/venda/${id}`);
      }
 
+     
 
 /// SWR
