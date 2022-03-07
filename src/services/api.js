@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 export const api = axios.create({
-    baseURL: "http://10.3.1.95:80",
+    baseURL: "http://127.0.0.1:8000",
 });
 
 export const createSession = (username, password) => {

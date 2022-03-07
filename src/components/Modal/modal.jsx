@@ -1,5 +1,6 @@
 import * as React from 'react';
 import "./modal.css"
+import ComprovanteVenda from '../../reports/venda'
 import Box from '@mui/material/Box';
 import IconButton  from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,14 +8,12 @@ import ArticleIcon from '@mui/icons-material/Article';
 import PrintIcon from '@mui/icons-material/Print';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
-import { useFetch } from '../../hooks/useFetch';
-import { deleteVendas } from "../../services/api";
 
-import { mutate as mutateGlobal } from 'swr';
+import { deleteVendas } from '../../services/api';
 
 
   const BasicModal = (id) => {
-    const {data, mutate} = useFetch(`/api/v2/venda/${id.value}`)
+    const data = id.value
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -23,14 +22,13 @@ import { mutate as mutateGlobal } from 'swr';
       return <button onClick={handleOpen}>Open modal</button>
     }
 
-
-    function AcaoDeletar (id) {
-      if ( window.confirm("Deseja deletar essa venda ?")) {
-          deleteVendas(id);
-          mutateGlobal(`/api/v2/venda/`, !data)
-          handleClose()
-      }
-  }
+    
+  //   function AcaoDeletar (id) {
+  //     if ( window.confirm("Deseja deletar essa venda ?")) {
+  //         deleteVendas(id);
+  //         mutate('/api/v2/venda/', false);
+  //     }
+  // }
 
 
     return (
@@ -100,9 +98,12 @@ import { mutate as mutateGlobal } from 'swr';
             <div id='opcoes'>
               <IconButton><EditIcon/></IconButton>
 
-              <IconButton><PrintIcon/></IconButton>
+              <IconButton onClick={() => ComprovanteVenda(data)}><PrintIcon/></IconButton>
 
-              <IconButton onClick={() => AcaoDeletar(data.ordem)} id='delete'><DeleteIcon/></IconButton>
+              <IconButton onClick={() => {
+                // AcaoDeletar(data.ordem)
+                handleClose()
+              }} id='delete'><DeleteIcon/></IconButton>
             </div>
 
 
