@@ -10,7 +10,8 @@
     background: whitesmoke;
     border: 2px solid #000;
     size: 4;
-    color: white
+    color: white;
+    border-radius: 10%;
 }
 
 #tittle-modal {
@@ -93,8 +94,8 @@
 
 #opcoes * {
     font-size: 2rem;
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
 
     
 }

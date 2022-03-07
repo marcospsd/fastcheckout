@@ -5,14 +5,19 @@ import OTDZ from '../statics/FAST.png'
 
 function ComprovanteVenda(data) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-    const formapag = data.formavenda.map((forma) => (
-        [forma.forma, forma.parcelas, parseInt(forma.valor).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})]
-    ));
-
-    const corpovenda = data.corpovenda.map((corpo) => (
-        [corpo.codpro, corpo.quantidade, parseInt(corpo.valor_unitsis).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}), parseInt(corpo.valor_unitpro).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})]
-    ))
+    
+    const formapagamento = (id) => {
+        switch (id) {
+            case "DH":
+                return "Dinheiro"
+            case "CC":
+                return "C. Crédito"
+            case "CD":
+                return "C. Débito"
+            case "DP":
+                return "PIX"
+            }
+    }
 
     const titulo = [];
 
@@ -22,8 +27,7 @@ function ComprovanteVenda(data) {
             width: 75,
             height: 30
         },
-        {
-        },
+
         {
             text: '-------- Documento Auxiliar de Venda --------',
             fontSize: 4,
@@ -32,12 +36,8 @@ function ComprovanteVenda(data) {
             alignment: 'center'
             
         },
-        {
-            text: 'Obs: Esse documento não é um documento fiscal.',
-            fontSize: 3,
-            margin: [0,5,0,0],
-            alignment: 'center'
-        },
+
+
         {
             margin: [0,5,0,0],
             fontSize: 4,
@@ -67,7 +67,7 @@ function ComprovanteVenda(data) {
 
         },
         {
-            margin: [0,5,0,0],
+            margin: [0,2,0,0],
             fontSize: 4,
             alignment: 'justify',
             bold: true,
@@ -110,22 +110,53 @@ function ComprovanteVenda(data) {
             alignment: 'center'
         },
         {
-            fontSize: 3,
-            alignment: 'right',
-            layout: 'lightHorizontalLines', // optional
-            table: {
-              // headers are automatically repeated if the table spans over multiple pages
-              // you can declare how many rows should be treated as headers
-              headerRows: 1,
-              widths: [ '*', '*', '*'],
-      
-              body: [
-                [ 'Forma de Pagamento', 'Parcelas', 'Valor'],
-                ...formapag,
-              ]
+            fontSize: 4,
+            alignment: 'center',
+            margin: [0,3,0,0],
+            columns: [
+                {
+                    text: 'Forma'
+                },
+                {
+                    text: 'Parcelas'
+                },
+                {
+                    text: 'Valor'
+                }
+            ]
+
+        },
+        {
+            text: '_________________________________________',
+            fontSize: 4,
+            alignment: 'center'
+        },
+        data.formavenda.map((formapag) => (
+            {
+                fontSize: 4,
+                alignment: 'center',
+                margin: [0,2,0,0],
+                columns: [
+                    {
+                        text: formapagamento(formapag.forma)
+                    },
+                    {
+                        text: formapag.parcelas
+                    },
+                    {
+                        text: parseInt(formapag.valor).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+                    }
+                ]
             }
-          },
-          {
+        )),
+        {
+            text: '--------------------------------------------------------',
+            fontSize: 4,
+            bold: true,
+            margin: [0,5,0,0],
+            alignment: 'center'
+        },
+        {
             text: 'Produtos',
             fontSize: 4,
             bold: true,
@@ -133,16 +164,87 @@ function ComprovanteVenda(data) {
             alignment: 'center'
         },
         {
-            fontSize: 3,
-            table: {
-              headerRows: 1,
-              widths: ['*', '*', '*', '*'],
-              body: [
-                [ 'Codigo', 'Quant.', 'Valor U.', 'Valor F.'],
-                ...corpovenda,
-              ]
+            fontSize: 4,
+            alignment: 'center',
+            margin: [0,3,0,0],
+            columns: [
+                {
+                    text: 'Codigo'
+                },
+                {
+                    text: 'Quant.'
+                },
+                {
+                    text: 'Val. Unit.'
+                },
+                {
+                    text: 'Val. Fin.'
+                }
+            ]
+
+        },
+        {
+            text: '_________________________________________',
+            fontSize: 4,
+            alignment: 'center'
+        },
+        data.corpovenda.map((corpo) => (
+            {
+                fontSize: 3.7,
+                alignment: 'center',
+                margin: [0,2,0,0],
+                columns: [
+                    {
+                        text: corpo.codpro
+                    },
+                    {
+                        text: corpo.quantidade
+                    },
+                    {
+                        text: parseInt(corpo.valor_unitsis).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+                    },
+                    {
+                        text: parseInt(corpo.valor_unitpro).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+                    }
+                ]
             }
-          },
+        )),
+        {
+            text: '--------------------------------------------------------',
+            fontSize: 4,
+            bold: true,
+            margin: [0,5,0,0],
+            alignment: 'center'
+        },
+        {
+            text: 'ATENÇÃO',
+            fontSize: 5,
+            margin: [0,5,0,0],
+            alignment: 'center'
+        },
+        {
+            text: 'Esse documento não é um documento fiscal. Sua nota fiscal será enviada através do e-mail ou whatsapp pelos dados fornecidos no cadastro.',
+            fontSize: 4,
+            margin: [0,5,0,0],
+            alignment: 'center'
+        },
+        {
+            text: 'Qualquer dúvida, entre em contato com nosso DiniZAP pelo telefone (27) 3185-8101.',
+            fontSize: 4,
+            alignment: 'center',
+            margin: [0,2,0,0],
+        },
+        {
+            text: 'Siga nossas redes sociais e fique por dentro de todas novidades.',
+            fontSize: 4,
+            alignment: 'center'
+        },
+        {
+            margin: [0,5,0,0],
+            qr: 'https://www.instagram.com/oticasdinizvitoria/',
+            fit: '50',
+            alignment: 'center'
+        },
 
     ];
 
@@ -161,7 +263,7 @@ function ComprovanteVenda(data) {
         footer: [rodape],
     }
 
-    pdfMake.createPdf(docDefinitions).open()
+    pdfMake.createPdf(docDefinitions).open({}, window)
 }
 
 export default ComprovanteVenda
