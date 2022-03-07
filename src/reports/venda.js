@@ -61,7 +61,7 @@ function ComprovanteVenda(data) {
                     text: data.ordem
                 },
                 {
-                    text: (data.nome_cliente).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+                    text: (data.cpf).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
                 }
             ]
 
@@ -94,6 +94,18 @@ function ComprovanteVenda(data) {
                 }
             ]
 
+        },
+        {
+            margin: [0,2,0,0],
+            fontSize: 4,
+            alignment: 'justify',
+            bold: true,
+            text: 'Nome: '
+        },
+        {
+            fontSize: 4,
+            alignment: 'justify',
+            text: data.nome
         },
         {
             text: '--------------------------------------------------------',
@@ -223,7 +235,7 @@ function ComprovanteVenda(data) {
             alignment: 'center'
         },
         {
-            text: 'Esse documento não é um documento fiscal. Sua nota fiscal será enviada através do e-mail ou whatsapp pelos dados fornecidos no cadastro.',
+            text: `Esse documento não é um documento fiscal. Sua nota fiscal será enviada através do e-mail ${data.email} ou whatsapp ${data.telefone} que foram fornecidos no cadastro.`,
             fontSize: 4,
             margin: [0,5,0,0],
             alignment: 'center'

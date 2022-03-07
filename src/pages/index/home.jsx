@@ -84,7 +84,8 @@ const HomePage = () => {
                 {data.map((venda) => (
                     <div className="view-venda" key={venda.ordem} id={venda.status}>
                         <p><strong>Ordem: </strong>{venda.ordem}</p>
-                        <p><strong>CPF: </strong>{(venda.nome_cliente).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</p>
+                        <p><strong>CPF: </strong>{(venda.cpf).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</p>
+                        <p><strong>Nome: </strong>{venda.nome}</p>
                         <div className="row">
                             <div className="col" id='valor'>
                             <label><strong>Valor: </strong>{parseInt(venda.total_venda).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>

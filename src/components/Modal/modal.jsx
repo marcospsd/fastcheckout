@@ -50,7 +50,7 @@ import axios from 'axios';
     function AprovarCompra (data) {
       const res =  api.put(`/api/v2/venda/${data.ordem}/`, {...data, status: 'F'})
       mutate('/api/v2/venda/', false)
-      ComprovanteVenda(data)
+      // ComprovanteVenda(data)
     }
 
     function RetornaCompra (data) {
@@ -105,15 +105,21 @@ import axios from 'axios';
               <label><strong>RESUMO DA VENDA</strong></label>
             </div>
             <div id='dadosvenda'>
-              <div className='col'>
-                <label><strong>Ordem: </strong> {data.ordem}</label>
-                <label><strong>CPF: </strong> {(data.nome_cliente).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</label>
+              <div className="row">
+                <div className='col'>
+                  <label><strong>Ordem: </strong>{data.ordem}</label>
+                  <label><strong>CPF: </strong>{(data.cpf).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</label>
+                </div>
+                <div className='col'>
+                  <label><strong>Vendedor: </strong> {data.vendedor}</label>
+                  <label><strong>Total da Venda: </strong>{parseInt(data.total_venda).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
+                </div>
               </div>
-              <div className='col'>
-              <label><strong>Vendedor: </strong> {data.vendedor}</label>
-              <label><strong>Total da Venda: </strong> {parseInt(data.total_venda).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
-              </div>
+              <label className='dadoscli'><strong>Nome: </strong> {data.nome}</label>
+              <label className='dadoscli'><strong>E-mail: </strong> {data.email}</label>
+              {/* <label className='dadoscli' id="dadosclifinal"><strong>Telefone: </strong> {(data.telefone).replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}</label> */}
             </div>
+            
             <div id='formadepagamento'>
             <p><strong>FORMA DE PAGAMENTO</strong></p>
               <table>
@@ -146,7 +152,7 @@ import axios from 'axios';
                 </tr>
               {data.corpovenda.map((corpovenda) => (
                 <tr key={corpovenda.id}>
-                <td>{corpovenda.codpro}</td>
+                <td>{corpovenda.codpro.codigo}</td>
                 <td>{corpovenda.quantidade}</td>
                 <td>{parseInt(corpovenda.valor_unitsis).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</td>
                 <td>{parseInt(corpovenda.valor_unitpro).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</td>

@@ -33,14 +33,17 @@
 
 #dadosvenda {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     max-width: 100%;
     margin-top: 0.5rem;
     background-color: #c52f33;
     border-radius: 1rem;
     justify-content: center;
+    padding: 0.5rem;
 }
+
+
 
 #dadosvenda .col {
     display: flex;
@@ -48,9 +51,15 @@
     padding: 0.7rem;
 }
 
+
 #dadosvenda label {
     padding: 0.07rem;
 }
+
+#dadosvenda .dadoscli {
+    margin: 0.3rem; 
+}
+
 
 #formadepagamento {
     display: flex;
