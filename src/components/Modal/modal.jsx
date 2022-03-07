@@ -5,11 +5,15 @@ import Box from '@mui/material/Box';
 import IconButton  from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArticleIcon from '@mui/icons-material/Article';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import PrintIcon from '@mui/icons-material/Print';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
+import {mutate} from 'swr'
 
-import { deleteVendas } from '../../services/api';
+import { api, deleteVendas } from '../../services/api';
+import axios from 'axios';
 
 
   const BasicModal = (id) => {
@@ -22,14 +26,70 @@ import { deleteVendas } from '../../services/api';
       return <button onClick={handleOpen}>Open modal</button>
     }
 
-    
-  //   function AcaoDeletar (id) {
-  //     if ( window.confirm("Deseja deletar essa venda ?")) {
-  //         deleteVendas(id);
-  //         mutate('/api/v2/venda/', false);
-  //     }
-  // }
+    const formapagamento = (id) => {
+      switch (id) {
+          case "DH":
+              return "Dinheiro"
+          case "CC":
+              return "C. Crédito"
+          case "CD":
+              return "C. Débito"
+          case "DP":
+              return "PIX"
+          }
+  }
 
+    
+    function AcaoDeletar (id) {
+      if ( window.confirm("Deseja deletar essa venda ?")) {
+          deleteVendas(id);
+          mutate('/api/v2/venda/', false);
+      }
+  }
+
+    function AprovarCompra (data) {
+      const res =  api.put(`/api/v2/venda/${data.ordem}/`, {...data, status: 'F'})
+      mutate('/api/v2/venda/', false)
+      ComprovanteVenda(data)
+    }
+
+    function RetornaCompra (data) {
+      const res = api.put(`/api/v2/venda/${data.ordem}/`, {...data, status: 'P'})
+      mutate('/api/v2/venda/', false)
+      handleClose()
+    }
+
+    function ButtonCorreto(data) {
+      switch (data.status) {
+        case "P":
+        return (
+          <>
+          <IconButton><EditIcon/></IconButton>
+
+          <IconButton onClick={() => AprovarCompra(data)}><FactCheckIcon/></IconButton>
+
+          <IconButton onClick={() => {
+                AcaoDeletar(data.ordem)
+                handleClose()
+              }} id='delete'><DeleteIcon/></IconButton>
+          </>
+        )
+        
+        
+       
+        case "F":
+          return (
+            <>
+            <IconButton onClick={() => RetornaCompra(data)}><SettingsBackupRestoreIcon /></IconButton>
+           
+            <IconButton onClick={() => ComprovanteVenda(data)}><PrintIcon/></IconButton>
+            </>
+          ) 
+          
+      }
+
+
+    }
 
     return (
       <div>
@@ -65,7 +125,7 @@ import { deleteVendas } from '../../services/api';
                 </tr>
               {data.formavenda.map((forma) => (
                 <tr key={forma.id}>
-                  <td className='formaconteudo' >{forma.forma}</td>
+                  <td className='formaconteudo' >{formapagamento(forma.forma)}</td>
                   <td className='formaconteudo' >{forma.parcelas}</td>
                   <td className='formaconteudo' >{parseInt(forma.valor).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</td>
                 </tr>
@@ -96,18 +156,10 @@ import { deleteVendas } from '../../services/api';
               </table>
             </div>
             <div id='opcoes'>
-              <IconButton><EditIcon/></IconButton>
+              
+              { ButtonCorreto(data) }
 
-              <IconButton onClick={() => ComprovanteVenda(data)}><PrintIcon/></IconButton>
-
-              <IconButton onClick={() => {
-                // AcaoDeletar(data.ordem)
-                handleClose()
-              }} id='delete'><DeleteIcon/></IconButton>
             </div>
-
-
-
         </Box>
       </Modal>
     </div>
