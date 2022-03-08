@@ -1,6 +1,6 @@
 import * as React from 'react';
 import "./modal.css"
-import ComprovanteVenda from '../../reports/venda'
+
 import Box from '@mui/material/Box';
 import IconButton  from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,17 +10,20 @@ import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore
 import PrintIcon from '@mui/icons-material/Print';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
-import {mutate} from 'swr'
-
-import { api, deleteVendas } from '../../services/api';
-import axios from 'axios';
 
 
-  const BasicModal = (id) => {
-    const data = id.value
+
+
+
+import { useSWRConfig } from 'swr'
+
+
+  const BasicModal = (props) => {
+    const data = props.value
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    // const { mutate } = useSWRConfig();
 
     if (!data) {
       return <button onClick={handleOpen}>Open modal</button>
@@ -39,25 +42,12 @@ import axios from 'axios';
           }
   }
 
-    
-    function AcaoDeletar (id) {
-      if ( window.confirm("Deseja deletar essa venda ?")) {
-          deleteVendas(id);
-          mutate('/api/v2/venda/', false);
-      }
+  const numero = (n) => {
+    if (n) {
+      return n.replace(/^(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")
+    }
+
   }
-
-    function AprovarCompra (data) {
-      const res =  api.put(`/api/v2/venda/${data.ordem}/`, {...data, status: 'F'})
-      mutate('/api/v2/venda/', false)
-      // ComprovanteVenda(data)
-    }
-
-    function RetornaCompra (data) {
-      const res = api.put(`/api/v2/venda/${data.ordem}/`, {...data, status: 'P'})
-      mutate('/api/v2/venda/', false)
-      handleClose()
-    }
 
     function ButtonCorreto(data) {
       switch (data.status) {
@@ -66,11 +56,16 @@ import axios from 'axios';
           <>
           <IconButton><EditIcon/></IconButton>
 
-          <IconButton onClick={() => AprovarCompra(data)}><FactCheckIcon/></IconButton>
+          <IconButton onClick={() => {
+            handleClose()
+            props.aprovarcompra(data)
+
+          }}><FactCheckIcon/></IconButton>
 
           <IconButton onClick={() => {
-                AcaoDeletar(data.ordem)
-                handleClose()
+              handleClose()
+              props.acaodeletar(data.ordem)
+                
               }} id='delete'><DeleteIcon/></IconButton>
           </>
         )
@@ -80,10 +75,17 @@ import axios from 'axios';
         case "F":
           return (
             <>
-            <IconButton onClick={() => RetornaCompra(data)}><SettingsBackupRestoreIcon /></IconButton>
+            <IconButton onClick={() => {
+              handleClose()
+              props.retornarcompra(data)}
+              }><SettingsBackupRestoreIcon /></IconButton>
            
-            <IconButton onClick={() => ComprovanteVenda(data)}><PrintIcon/></IconButton>
+            <IconButton onClick={() => {
+                handleClose()
+                props.comprovantevenda(data)
+            }}><PrintIcon/></IconButton>
             </>
+          
           ) 
           
       }
@@ -109,6 +111,7 @@ import axios from 'axios';
                 <div className='col'>
                   <label><strong>Ordem: </strong>{data.ordem}</label>
                   <label><strong>CPF: </strong>{(data.cpf).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</label>
+            
                 </div>
                 <div className='col'>
                   <label><strong>Vendedor: </strong> {data.vendedor}</label>
@@ -117,7 +120,8 @@ import axios from 'axios';
               </div>
               <label className='dadoscli'><strong>Nome: </strong> {data.nome}</label>
               <label className='dadoscli'><strong>E-mail: </strong> {data.email}</label>
-              {/* <label className='dadoscli' id="dadosclifinal"><strong>Telefone: </strong> {(data.telefone).replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}</label> */}
+              <label className='dadoscli' id="dadosclifinal"><strong>Telefone: </strong> {numero(data.telefone)}</label>
+        
             </div>
             
             <div id='formadepagamento'>
@@ -144,17 +148,15 @@ import axios from 'axios';
               <table>
                 <tbody>
                 <tr id='corpotittle'>
-                    <td>Codigo</td>
-                    <td>Quantidade</td>
-                    <td>Valor Unitário</td>
-                    <td>Valor Final</td>
+                    <td>Código</td>
+                    <td>Descrição</td>
+                    <td>Valor</td>
                     
                 </tr>
               {data.corpovenda.map((corpovenda) => (
                 <tr key={corpovenda.id}>
-                <td>{corpovenda.codpro.codigo}</td>
-                <td>{corpovenda.quantidade}</td>
-                <td>{parseInt(corpovenda.valor_unitsis).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</td>
+                <td>{corpovenda.codpro}</td>
+                <td>{corpovenda.descripro}</td>
                 <td>{parseInt(corpovenda.valor_unitpro).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</td>
                 </tr>
               ))}

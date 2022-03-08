@@ -88,9 +88,16 @@
     background-color: #c52f33;
     border-radius: 1rem;
     justify-content: center;
-    padding: 0.5rem;
+    padding: 0.8rem;
 
 }
+
+#corpovenda td {
+    padding: 0.3rem;
+
+}
+
+
 
 #opcoes {
     padding-top: 1rem;

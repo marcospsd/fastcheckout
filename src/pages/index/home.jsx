@@ -1,15 +1,20 @@
 import * as React from 'react';
 import { AuthContext } from "../../contexts/auth";
-import { deleteVendas } from "../../services/api";
 import { useFetch } from "../../hooks/useFetch";
 import IMGFastCheckout from "../../statics/FAST.png"
 import "./home.css"
-
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
 import BasicModal from '../../components/Modal/modal'
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { CircularProgress } from "@mui/material";
-import ArticleIcon from '@mui/icons-material/Article';
+import { useSWRConfig } from 'swr'
+
+import ComprovanteVenda from '../../reports/venda';
+import { api, deleteVendas } from '../../services/api';
+
 
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -18,8 +23,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 const HomePage = () => {
     const user = (localStorage.getItem('nome')).replace('"', '').replace('"', '').toUpperCase()
+    const [search, setSearch] = React.useState("");
     const { data, mutate } = useFetch('/api/v2/venda/');
     const { logout } = React.useContext(AuthContext);
+    // const { mutate } = useSWRConfig()
     const handleLogout = () => {
         logout()
 
@@ -28,6 +35,7 @@ const HomePage = () => {
     if (!data) {
         return (
             <>
+
             <CircularProgress />
 
             <IconButton onClick={() => handleLogout()}><LogoutIcon/></IconButton>
@@ -36,9 +44,43 @@ const HomePage = () => {
         )
 
     }
+
+    const AcaoDeletar = async (id) => {
+            await api.delete(`/api/v2/venda/${id}`)
+            const updatedata = data.filter((x) => x.ordem !== id)
+            mutate(updatedata, false)
+
+        }
+  
+        
+      const AprovarCompra = async (venda) => {
+        await api.put(`/api/v2/venda/${venda.ordem}/`, {...venda, status: 'F'})
+        const updatedata = data.map((x) => {
+            if (x.ordem == venda.ordem) {
+                return { ...x, status: 'F'}
+            } else {return x}
+        })
+        ComprovanteVenda(venda)
+        mutate(updatedata, false) 
+  
+      }
+  
+      const RetornaCompra = async (venda) => {
+        await api.put(`/api/v2/venda/${venda.ordem}/`, {...venda, status: 'P'})
+        const rev = data.map((x) => {
+            if (x.ordem === venda.ordem) {
+                return { ...x, status: 'P'}
+            } else {return x}
+        })
+        //ComprovanteVenda(venda)
+        mutate(rev, false) 
+        
+  
+      }
+
     
 
-////// Conversão para Reais dos dados da Api    
+//// Conversão para Reais dos dados da Api    
     const Faturado = data.map(x => x.total_venda).reduce((a, b) => parseInt(a) + parseInt(b), 0)
     const Reais = parseInt(Faturado).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
     const QuantidadeTotal = data.map(x => x).length;
@@ -51,10 +93,7 @@ const HomePage = () => {
         }
     }
 
-
-
-    
-///// Modal para Confirmação de Exclusão de venda 
+   
 
 
     return (
@@ -80,8 +119,26 @@ const HomePage = () => {
                 <AddShoppingCartIcon fontSize="inherit"/>
             </IconButton>
             </div>
+            <TextField id="searchinput" label="Pesquise pela Ordem/Nome" variant="outlined"value={search} onChange={(event) => { setSearch(event.target.value) }}
+             InputProps={{
+                endAdornment: (
+                    <InputAdornment position="end">
+                    <SearchIcon />
+                    </InputAdornment>
+                ),
+                }} />
             <div className="vendas-container">
-                {data.map((venda) => (
+                {data.filter(
+                    (venda) => {
+                        if (search == "") {
+                            return venda
+                        } else if (venda.ordem.toString().includes(search)) {
+                            return venda
+                        } else if ((venda.nome.toLowerCase().includes(search.toLowerCase()))) {
+                            return venda
+                         }
+                    }
+                ).map((venda) => (
                     <div className="view-venda" key={venda.ordem} id={venda.status}>
                         <p><strong>Ordem: </strong>{venda.ordem}</p>
                         <p><strong>CPF: </strong>{(venda.cpf).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</p>
@@ -95,8 +152,14 @@ const HomePage = () => {
                                 </div>
                         </div>
                         
-                        
-                        <BasicModal value={venda} /> 
+                        <BasicModal 
+                                value={venda}
+                                acaodeletar={AcaoDeletar}
+                                aprovarcompra={AprovarCompra}
+                                retornarcompra={RetornaCompra}
+    
+
+                        /> 
                 </div>
                 ))}
             

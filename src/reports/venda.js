@@ -19,6 +19,21 @@ function ComprovanteVenda(data) {
             }
     }
 
+    function emailwhats(data) {
+        if (data.telefone, data.email) {
+            return `Sua nota fiscal será enviada através do E-mail: ${data.email} ou Whatsapp: ${data.telefone.replace(/^(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")} que foram fornecidos no cadastro.`
+        } else if (data.email != null) {
+            return `Sua nota fiscal será enviada através do E-mail: ${data.email} que foi fornecido no cadastro.`
+        } else if (data.telefone != null) {
+            return `Sua nota fiscal será enviada através do WhatsApp: ${data.telefone.replace(/^(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")} que foi fornecido no cadastro.`
+        } else if (!data.email, !data.telefone) {
+            return ""
+        }
+    }
+
+
+
+
     const titulo = [];
 
     const listdata = [
@@ -184,13 +199,10 @@ function ComprovanteVenda(data) {
                     text: 'Codigo'
                 },
                 {
-                    text: 'Quant.'
+                    text: 'Descrição'
                 },
                 {
-                    text: 'Val. Unit.'
-                },
-                {
-                    text: 'Val. Fin.'
+                    text: 'Valor'
                 }
             ]
 
@@ -210,10 +222,7 @@ function ComprovanteVenda(data) {
                         text: corpo.codpro
                     },
                     {
-                        text: corpo.quantidade
-                    },
-                    {
-                        text: parseInt(corpo.valor_unitsis).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+                        text: corpo.descripro
                     },
                     {
                         text: parseInt(corpo.valor_unitpro).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
@@ -235,7 +244,7 @@ function ComprovanteVenda(data) {
             alignment: 'center'
         },
         {
-            text: `Esse documento não é um documento fiscal. Sua nota fiscal será enviada através do e-mail ${data.email} ou whatsapp ${data.telefone} que foram fornecidos no cadastro.`,
+            text: `Esse documento não é um documento fiscal.${emailwhats(data)}`,
             fontSize: 4,
             margin: [0,5,0,0],
             alignment: 'center'

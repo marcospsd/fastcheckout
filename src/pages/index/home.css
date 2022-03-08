@@ -122,6 +122,9 @@ p {
     margin: 15px;
 }
 
+.container .MuiFormControl-root {
+    width: 100%;
+}
 
 .vendas-container {
     width: 100%;
