@@ -6,9 +6,10 @@ import "./home.css"
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
-import BasicModal from '../../components/Modal/modal'
+import BasicModal from '../../components/Modal/ModalViewVenda'
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
 import { CircularProgress } from "@mui/material";
 import { useSWRConfig } from 'swr'
 
@@ -17,11 +18,14 @@ import { api, deleteVendas } from '../../services/api';
 
 
 import LogoutIcon from '@mui/icons-material/Logout';
+import ModalCreate from '../../components/Modal/ModalCreateVenda';
 
 
 
 
 const HomePage = () => {
+    const [open, setOpen] = React.useState(false);
+    const openModal = () => { setOpen(prev => !prev)}
     const user = (localStorage.getItem('nome')).replace('"', '').replace('"', '').toUpperCase()
     const [search, setSearch] = React.useState("");
     const { data, mutate } = useFetch('/api/v2/venda/');
@@ -115,15 +119,16 @@ const HomePage = () => {
                 </div>
             </div>
             <div className="menu">
-            <IconButton id="addvenda" aria-label="add to shopping cart" size="large">
-                <AddShoppingCartIcon fontSize="inherit"/>
-            </IconButton>
+                <IconButton id="addvenda" aria-label="add to shopping cart" size="large" onClick={openModal}><ModalCreate/>
+                    <AddShoppingCartIcon fontSize="inherit"/>
+                </IconButton>
+                <ModalCreate open={open} setOpen={setOpen}></ModalCreate>
             </div>
             <TextField id="searchinput" label="Pesquise pela Ordem/Nome" variant="outlined"value={search} onChange={(event) => { setSearch(event.target.value) }}
              InputProps={{
                 endAdornment: (
                     <InputAdornment position="end">
-                    <SearchIcon />
+                        <SearchIcon />
                     </InputAdornment>
                 ),
                 }} />

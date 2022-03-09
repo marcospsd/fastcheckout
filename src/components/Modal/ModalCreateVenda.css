@@ -1,0 +1,16 @@
+#box-create-venda {
+    position: absolute;
+    padding: 1rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    max-width: 100%;
+    height: auto;
+    background: whitesmoke;
+    border: 2px solid #000;
+    size: 4;
+    color: rgb(0, 0, 0);
+    border-radius: 10%;
+
+}

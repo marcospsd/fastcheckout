@@ -1,5 +1,5 @@
 import * as React from 'react';
-import "./modal.css"
+import "./ModalViewVenda.css"
 
 import Box from '@mui/material/Box';
 import IconButton  from '@mui/material/IconButton';

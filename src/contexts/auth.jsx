@@ -17,6 +17,7 @@ export const AuthProvicer = ({children}) => {
     useEffect(() => {
         const recoveredUser = localStorage.getItem('nome');
         const token = localStorage.getItem('token');
+        const codvend = localStorage.getItem('codvend');
 
         if(recoveredUser && token) {
             setUser(JSON.parse(recoveredUser));
@@ -35,9 +36,12 @@ export const AuthProvicer = ({children}) => {
 
         const loggedUser = response.data.nome
         const token = response.data.token
+        const codvend = response.data.codvend
 
         localStorage.setItem("nome", JSON.stringify(loggedUser));
         localStorage.setItem("token", token);
+        localStorage.setItem("codvend", JSON.stringify(codvend));
+    
 
         api.defaults.headers.Authorization = `token ${token}`
 
@@ -49,8 +53,9 @@ export const AuthProvicer = ({children}) => {
     };
     
     const logout = () => {
-        localStorage.removeItem("username")
+        localStorage.removeItem("nome")
         localStorage.removeItem("token")
+        localStorage.removeItem("codvend")
 
         api.defaults.headers.Authorization = null;
 
