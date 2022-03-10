@@ -14,19 +14,25 @@ const steps = [
     { id: 'formapag' },
 ]
 
-const State = {
+const state = {
+    cpf: "",
     nome: "",
+    email: "",
+    telefone: "",
+    total_venda: "",
+    corpovenda: [],
+    formavenda: [],
+    status: "P",
 }
-
 const ModalCreate = ({open, setOpen}) => {
-
-    const [formData, setForm] = useForm(State)
+    const codvend = (localStorage.getItem('codvend')).replace('"', '').replace('"', '')
+    const nomevendedor = (localStorage.getItem('nome')).replace('"', '').replace('"', '').toLocaleUpperCase()
+    const [formData, setForm] = useForm({ ...state, codvend: codvend, nomevend: nomevendedor })
     const { step, navigation } = useStep({
         steps, initialStep: 0
     })
-
-    const props = { formData, setForm, navigation
-    }
+    
+    const props = { formData, setForm, navigation }
     switch(step.id) {
         case 'cadastro':
             return (

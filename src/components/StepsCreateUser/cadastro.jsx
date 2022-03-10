@@ -1,44 +1,77 @@
 import React from 'react'
-import './cadastro.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import InputMask from 'react-input-mask';
+
+
 
 export const CadastroForm = ({ formData, setForm, navigation }) => {
-    console.log(formData)
+    const { nome, cpf, telefone, email } = formData;
 
-     
+    console.log(formData)
     return (
         <div className='container-cadastro'>
             <p id='cadastro-tittle'>Cadastro</p>
             <div className="cadastro-fields">
-                <TextField 
-                id="outlined-basic" 
+
+                <TextField
+                id="text-field-cpf" 
                 label="Nome Completo" 
-                variant="outlined" 
+                name="nome"
                 onChange={setForm}
-                value={formData.nome}
+                variant="outlined"
+                autoComplete='off'
+                value={nome}
+                required
                 />
-                <TextField 
-                id="outlined-basic" 
+                
+                <InputMask
+                mask="999.999.999-99"
+                onChange={setForm}
+                value={cpf}
+                maskChar=" "
+                name="cpf"
+                >
+                { () => <TextField
+                id="text-field-cpf" 
                 label="CPF" 
-                variant="outlined" 
-                />
+                variant="outlined"
+                autoComplete='off'
+                name="cpf"
+                required
+              
+                /> }
+                </InputMask>
+                
                 <TextField 
-                id="outlined-basic" 
+                id="text-field-email" 
                 label="E-Mail" 
-                variant="outlined" 
-                />            
-                <TextField 
-                id="outlined-basic" 
+                variant="outlined"
+                name="email"
+                onChange={setForm} 
+                autoComplete='off'
+                value={email}
+                />  
+                <InputMask
+                mask="(99) 99999-9999"
+                onChange={setForm}
+                maskChar=" "
+                name="telefone"
+                value={telefone}
+                >
+                { () => <TextField
+                id="text-field-telefone" 
                 label="Telefone" 
-                variant="outlined" 
-                />
+                variant="outlined"
+                autoComplete='off'
+                name="telefone"
+                /> }
+                </InputMask>
+
             </div>
                 <div className="cadastro-buttons"> 
-                    <Button variant="contained" onClick={() => navigation.previous()}>Back</Button>
-                    <Button variant="contained" onClick={() => navigation.next()}>Next</Button>
+                    <Button id="next"variant="contained" onClick={() => navigation.next()}>Proximo</Button>
                 </div>
-
 
         </div>
     )
