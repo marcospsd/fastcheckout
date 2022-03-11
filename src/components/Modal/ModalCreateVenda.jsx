@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './ModalCreateVenda.css'
 import { useForm, useStep } from 'react-hooks-helper';
 import { CadastroForm } from '../StepsCreateUser/cadastro';
@@ -27,7 +27,7 @@ const state = {
 const ModalCreate = ({open, setOpen}) => {
     const codvend = (localStorage.getItem('codvend')).replace('"', '').replace('"', '')
     const nomevendedor = (localStorage.getItem('nome')).replace('"', '').replace('"', '').toLocaleUpperCase()
-    const [formData, setForm] = useForm({ ...state, codvend: codvend, nomevend: nomevendedor })
+    const [formData, setForm] = useState({ ...state, codvend: codvend, nomevend: nomevendedor })
     const { step, navigation } = useStep({
         steps, initialStep: 0
     })
