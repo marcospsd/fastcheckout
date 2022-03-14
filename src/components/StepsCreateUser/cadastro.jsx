@@ -4,9 +4,13 @@ import Button from '@mui/material/Button';
 import InputMask from 'react-input-mask';
 import { api } from '../../services/api';
 import { cpf as CPFValidated } from 'cpf-cnpj-validator';
-import { ConstructionOutlined } from '@mui/icons-material';
 
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
 export const CadastroForm = ({ formData, setForm, navigation }) => {
     const [ nome, setNome ] = useState(formData.nome)
@@ -14,6 +18,8 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
     const [ telefone, setTelefone ] = useState(formData.telefone)
     const [ email, setEmail ] = useState(formData.email)
     const [ userbanco, setUserBanco] = useState(false)
+    const [ open, setOpen] = useState(false)
+    const [ alert, setAlert] = useState('')
 
 
 
@@ -23,7 +29,10 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
         if ( data.length !== 11) {
             return;
         }
-        api.get(`/api/v2/cliente/${data}/`)
+        if (data == '99999999999') {
+            return
+        } else {
+            api.get(`/api/v2/cliente/${data}/`)
             .then((res) => {
                 setNome(res.data.nome)
                 setEmail(res.data.email)
@@ -34,25 +43,29 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
             .catch((error) => {
                 return;
             })
+        }
+
     }
 
-    function ValidatedUser(nome, cpf, email, telefone) {
+    function CriarUsuario(nome, cpf, email, telefone) {
         api.post('/api/v2/cliente/', { cpf, nome, email, telefone })
         
     }
 
     function ValidatedCPF(cpf) {
-        const cepeefe = cpf?.replace(/[^0-9]/g, '')
-        if (cpf === '99999999999') {
+        const cpfdata = cpf?.replace(/[^0-9]/g, '')
+        if (cpfdata == '99999999999') {
             return true;
-        } else if (cpf.length === 14) {
-            
-            return CPFValidated.isValid(cepeefe)
+        } else {
+            if (cpfdata.length == 11) {
+            return CPFValidated.isValid(cpfdata)
+            }
         }
-        return true;
+        return true
     }
 
-    console.log(formData)
+
+
     return (
         <div className='container-cadastro'>
             <p id='cadastro-tittle'>Cadastro</p>
@@ -64,7 +77,8 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                     if (ValidatedCPF(e.target.value) == true) {
                         BuscaCPF(e)
                     } else {
-                        window.alert("CPF Invalido !")
+                        setAlert("CPF Inválido !")
+                        setOpen(true)
                     }}}
                 onChange={ (e) => setCPF(e.target.value) }
                 value={cpf}
@@ -119,17 +133,48 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                 /> }
                 </InputMask>
 
+                <Snackbar open={open} autoHideDuration={4000} onClose={() => setOpen(false)}>
+                    <Alert onClose={() => setOpen(false)} severity="error" sx={{ width: '75%' }}>
+                        {alert}
+                    </Alert>
+                </Snackbar>
+
             </div>
                 <div className="cadastro-buttons"> 
-                    <Button id="next"variant="contained" onClick={() => {
+                    <Button id="next" variant="contained" onClick={() => {
+                        if (cpf == '') {
+                            setAlert('CPF Não pode ser vazio !')
+                            setOpen(true)
+                            return;
+                        }
+                        if (ValidatedCPF(cpf) == false) {
+                            setAlert('CPF inválido !')
+                            setOpen(true)
+                            return;
+                        }
+                        if (nome == '') {
+                            setAlert('Nome não pode ser vazio !')
+                            setOpen(true)
+                            return;
+                        }
                         setForm({...formData,
                             nome: nome,
-                            cpf: cpf,
+                            cpf: cpf.replace(/[^0-9]/g, ''),
                             email: email,
                             telefone: telefone,
                         })
-                        ValidatedUser(nome, cpf, email, telefone)
-                        navigation.next()
+                        
+                        if (cpf.replace(/[^0-9]/g, '') == '99999999999') {
+                            navigation.next()
+                        } else {
+                            if (userbanco == false) {
+                            CriarUsuario(nome, cpf, email, telefone)
+                            navigation.next() 
+                            } else {
+                            navigation.next()   
+                            }
+                        }
+                        
                     }}>Proximo</Button>
                 </div>
 

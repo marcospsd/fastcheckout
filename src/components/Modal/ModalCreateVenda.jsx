@@ -29,7 +29,7 @@ const ModalCreate = ({open, setOpen}) => {
     const nomevendedor = (localStorage.getItem('nome')).replace('"', '').replace('"', '').toLocaleUpperCase()
     const [formData, setForm] = useState({ ...state, codvend: codvend, nomevend: nomevendedor })
     const { step, navigation } = useStep({
-        steps, initialStep: 0
+        steps, initialStep: 1
     })
     
     const props = { formData, setForm, navigation }

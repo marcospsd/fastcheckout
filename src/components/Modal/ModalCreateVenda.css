@@ -33,6 +33,68 @@
     text-align: -webkit-center;
 }
 
-.container-cadastro #next {
+#next, #back {
     background-color: #c52f33;    
+}
+
+.container-products {
+    display: flex;
+    flex-direction: column;
+  
+    align-items: center;
+}
+
+.container-products * {
+    align-items: center;
+    margin: 0.5rem;
+}
+
+.container-products p {
+    width: 100%;
+    font-size: 2.2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: -webkit-center;
+}
+
+
+.col-products {
+    display: flex;
+    flex-direction: row;
+}
+
+.label-products * {
+    height: 50px;
+    width: 100%;
+}
+
+.card-products {
+    background-color: rgb(206, 207, 207);
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #000;
+    position: relative;
+    width: 100%;
+    
+}
+.card-products label {
+    margin: 0.2rem;
+    width: 100%;
+}
+
+.card-products #delete {
+    position: absolute;
+    top: 0.1rem;
+    right: 0.1rem;
+}
+
+.buttons-products {
+    display: flex;
+    flex-direction: row;
+    padding: 1.5rem;
+}
+
+.buttons-products #next, #back {
+    margin: 0 2rem;
 }

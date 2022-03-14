@@ -171,9 +171,10 @@ p {
 }
 
 .view-venda #excluir {
-    position: absolute;
     top: 0.5rem;
     right: 0.5rem;
+    position: absolute;
+
 
 }
 
