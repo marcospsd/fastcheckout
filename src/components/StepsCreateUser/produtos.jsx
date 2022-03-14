@@ -16,6 +16,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [valorpro, setValorPro] = useState("")
     const [pesquisa, setPesquisa] = useState("")
     const [resultado, setResultado] = useState([])
+    const [key, setKey] = useState(0)
 
 
     const Adicionar = () => {
@@ -28,10 +29,12 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             quantidade: 1,
             valor_unitsis: valorsis,
             valor_unitpro: valorpro,
+            key: key+1,
         },
         ],
     }
     )
+        setKey(key+1)
         setCodPro("")
         setDescriPro("")
         setValorSis("")
@@ -52,9 +55,11 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         return;
     }
 
+    const DeletarCorpo = (id) => {
+        const newForma = formData.corpovenda.filter(x => x.key !== id)
+        setForm({...formData, corpovenda: newForma})
+    }
 
-    console.log(formData)
-    console.log(valorpro)
 
     return (
         <div className='container-products'>
@@ -77,7 +82,6 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
                     options={resultado}
                     renderInput={(params) => <TextField {...params} label="Pesquise pela Descrição do Produto" onChange={(e) => Pesquisar(e.target.value)} value={pesquisa} />}
                     />
-                <p></p>
                 </div>
                 <div className='col-products'>
                 <TextField label='Codigo' value={codpro} disabled/>
@@ -91,20 +95,18 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             </div>
             <Button id='back' variant="contained" onClick={Adicionar}>Adicionar</Button>
             {formData.corpovenda.map((venda) =>
-            <div className='card-products' key={venda.codpro}>
+            <div className='card-products' key={venda.key}>
                 <label id='Codigo'><strong>Codigo: </strong>{venda.codpro}</label>
                 <label id='Descricao'><strong>Descricao: </strong>{venda.descripro}</label>
                 <label id='Valor Sistema'><strong>Valor Sistema: </strong>{venda.valor_unitsis}</label>
                 <label id='Valor Promoção'><strong>Valor Promoção: </strong>{venda.valor_unitpro}</label>
-                <IconButton id='delete' ><DeleteIcon/></IconButton>
+                <IconButton id='delete' onClick={() => DeletarCorpo(venda.key)}><DeleteIcon/></IconButton>
             </div>
             )}
             <div className='buttons-products'>
                 <Button id='back' onClick={() => navigation.previous()} variant="contained">Back</Button>
                 <Button id='next' onClick={() => {
-
                     navigation.next() 
-
                 }} variant="contained">Next</Button>
             </div>
         </div>

@@ -11,7 +11,7 @@
     border: 2px solid #000;
     size: 4;
     color: rgb(0, 0, 0);
-    border-radius: 10%;
+    border-radius: 1.5rem;
 
 }
 
@@ -52,13 +52,19 @@
     text-align: -webkit-center;
 }
 
-
+.col-search-products * {
+    margin-bottom: 0.5rem;
+}
 
 .col-products {
     display: flex;
     flex-direction: row;
 }
 
+.col-products * {
+    margin: 0.3rem;
+    margin-bottom: 1rem;
+}
 
 .card-products {
     background-color: rgb(206, 207, 207);
@@ -69,6 +75,7 @@
     border: 1px solid #000;
     position: relative;
     width: 100%;
+    margin-top: 1.2rem;
     
 }
 .card-products label {
@@ -89,5 +96,83 @@
 }
 
 .buttons-products #next, #back {
+    margin: 0 2rem;
+}
+
+.container-formapag {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.tittle-formapag p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    
+}
+
+.dadosvenda-formapag {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 1rem;
+    width: 100%;
+    
+}
+
+.formpag-saldo, .formpag-quantidade, .formpag-valortotal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #c52f33;
+    color: aliceblue;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    
+    
+}
+
+
+.dadosvenda-formapag p {
+    padding: 1rem;
+}
+
+.selectforma {
+    width: 100%;
+    padding: 1rem;
+}
+
+.labelforma {
+    display: flex;
+    flex-direction: row;  
+    padding: 1rem;  
+}
+
+.buttonadd-forma {
+    display: flex;
+    width: 100%;
+}
+
+.card-formapag {
+    margin-top: 1.2rem;
+    background-color: rgb(206, 207, 207);
+    border-radius: 1.5rem;
+    padding: 1rem;
+    
+}
+
+.card-formapag td, tr {
+    padding: 0 0.3rem;
+    
+}
+
+.formpag-buttons {
+    padding: 1rem;  
+    
+}
+
+#next-forma, #back-forma {
+    background-color: #c52f33;
     margin: 0 2rem;
 }
