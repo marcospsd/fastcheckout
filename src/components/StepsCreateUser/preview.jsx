@@ -1,11 +1,23 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Box from '@mui/material/Box';
 import "../Modal/ModalViewVenda"
+import Button from '@mui/material/Button';
+import {api} from '../../services/api'
+import SenhaVenda from '../../reports/senha'
 
 
-export const PreviewForm = ({ formData, setForm, navigation }) => {
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
+export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state }) => {
+  const [ openmodal, setOpenModal] = useState(false)
+  const [ alert, setAlert] = useState('')
+
+  console.log(formData)
     return (
         <div>
           <Box id='box-view-itens'>
@@ -27,9 +39,7 @@ export const PreviewForm = ({ formData, setForm, navigation }) => {
                 <label className='dadoscli'><strong>Nome: </strong> {formData.nome}</label>
                 <label className='dadoscli'><strong>E-mail: </strong> {formData.email}</label>
                 <label className='dadoscli' id="dadosclifinal"><strong>Telefone: </strong> {(formData.telefone)}</label>
-          
               </div>
-              
               <div id='formadepagamento'>
               <p><strong>FORMA DE PAGAMENTO</strong></p>
                 <table>
@@ -69,9 +79,32 @@ export const PreviewForm = ({ formData, setForm, navigation }) => {
                 </tbody>
                 </table>
               </div>
-              <div id='opcoes'>
-                
+              <div id='opcoes-preview'>
+                <Button id='back-forma' onClick={() => navigation.previous()} variant="contained">Back</Button>
+                <Button id='back-forma' onClick={async () => {
+                    await api.post(`/api/v2/venda/`, formData)
+                    .then((res) => {
+                      if (res.status !== 201) {
+                        setAlert("Algo deu errado !")
+                        setOpenModal(true)
+                      } else {
+                        setAlert(`Criado com sucesso, Ordem:${res.data.ordem}`)
+                        setOpenModal(true)
+                        SenhaVenda(res.data)
+                        fecharModal()
+                        navigation.next()
+                        setForm(state)
+                      }
+                    })
+                }} variant="contained">Enviar</Button>
               </div>
+              
+              <Snackbar open={openmodal} autoHideDuration={5000} onClose={() => setOpenModal(false)}>
+                    <Alert onClose={() => setOpenModal(false)} severity="error" sx={{ width: '75%' }}>
+                        {alert}
+                    </Alert>
+                </Snackbar>
+
           </Box>
 
       </div>

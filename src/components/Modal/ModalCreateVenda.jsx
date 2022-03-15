@@ -4,7 +4,9 @@ import { useForm, useStep } from 'react-hooks-helper';
 import { CadastroForm } from '../StepsCreateUser/cadastro';
 import { ProdutosForm } from '../StepsCreateUser/produtos';
 import { FormaPagForm } from '../StepsCreateUser/formapag';
-import { PreviewForm } from '../StepsCreateUser/preview'
+import { PreviewForm } from '../StepsCreateUser/preview';
+import IconButton  from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -16,25 +18,37 @@ const steps = [
     { id: 'preview' },
 ]
 
-const state = {
-    cpf: "",
-    nome: "",
-    email: "",
-    telefone: "",
-    total_venda: "",
-    corpovenda: [],
-    formavenda: [],
-    status: "P",
-}
+
 const ModalCreate = ({open, setOpen}) => {
     const codvend = (localStorage.getItem('codvend')).replace('"', '').replace('"', '')
     const nomevendedor = (localStorage.getItem('nome')).replace('"', '').replace('"', '').toLocaleUpperCase()
-    const [formData, setForm] = useState({ ...state, codvend: codvend, nomevend: nomevendedor })
+    const state = {
+        cpf: "",
+        nome: "",
+        email: "",
+        telefone: "",
+        total_venda: "",
+        corpovenda: [],
+        formavenda: [],
+        status: "P",
+        vendedor: codvend,
+        nomevendedor: nomevendedor,
+    }
+    const [formData, setForm] = useState(state)
     const { step, navigation } = useStep({
         steps, initialStep: 0
     })
+
+    function fecharModal() {
+        setOpen(false)
+    }
+
+    function CloseModal() {
+        setOpen(false)
+        setForm(state)
+    }
     
-    const props = { formData, setForm, navigation }
+    const props = { formData, setForm, navigation, fecharModal, state }
     switch(step.id) {
         case 'cadastro':
             return (
@@ -48,6 +62,7 @@ const ModalCreate = ({open, setOpen}) => {
                     <Box
                         id='box-create-venda'
                     >
+                        <IconButton id="closeitem" onClick={CloseModal}><CloseIcon/></IconButton>
                         <CadastroForm { ...props }/>
                     </Box>
                 </Modal>
@@ -66,6 +81,7 @@ const ModalCreate = ({open, setOpen}) => {
                     <Box
                         id='box-create-venda'
                     >
+                        <IconButton id="closeitem" onClick={CloseModal}><CloseIcon/></IconButton>
                         <ProdutosForm { ...props }/>
                     </Box>
                 </Modal>
@@ -84,6 +100,7 @@ const ModalCreate = ({open, setOpen}) => {
                     <Box
                         id='box-create-venda'
                     >
+                        <IconButton id="closeitem" onClick={CloseModal}><CloseIcon/></IconButton>
                         <FormaPagForm { ...props }/>
                     </Box>
                 </Modal>
@@ -102,6 +119,7 @@ const ModalCreate = ({open, setOpen}) => {
                     <Box
                         id='box-create-venda'
                     >
+                        <IconButton id="closeitem" onClick={CloseModal}><CloseIcon/></IconButton>
                         <PreviewForm { ...props }/>
                     </Box>
                 </Modal>

@@ -1,5 +1,5 @@
 #box-create-venda {
-    position: absolute;
+    position: relative;
     padding: 1.5rem;
     top: 50%;
     left: 50%;
@@ -14,6 +14,13 @@
     border-radius: 1.5rem;
 
 }
+
+#closeitem {
+    top: 5px;
+    right: 5px;
+    position: absolute;
+}
+
 
 .container-cadastro {
     display: flex;
@@ -75,11 +82,11 @@
     border: 1px solid #000;
     position: relative;
     width: 100%;
-    margin-top: 1.2rem;
+    padding: 1rem;
+    margin-top: 1rem;
     
 }
 .card-products label {
-    margin: 0.2rem;
     width: 100%;
 }
 
@@ -116,7 +123,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.2rem;
     width: 100%;
     
 }
@@ -129,6 +136,7 @@
     color: aliceblue;
     border-radius: 1.5rem;
     padding: 1rem;
+    margin: 0.2rem;
     
     
 }
@@ -140,13 +148,17 @@
 
 .selectforma {
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .labelforma {
     display: flex;
     flex-direction: row;  
-    padding: 1rem;  
+    margin: 0.5rem;
+}
+
+.labelforma p {
+    color: white;
 }
 
 .buttonadd-forma {
@@ -175,4 +187,11 @@
 #next-forma, #back-forma {
     background-color: #c52f33;
     margin: 0 2rem;
+}
+
+
+#opcoes-preview {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
 }

@@ -98,8 +98,8 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             <div className='card-products' key={venda.key}>
                 <label id='Codigo'><strong>Codigo: </strong>{venda.codpro}</label>
                 <label id='Descricao'><strong>Descricao: </strong>{venda.descripro}</label>
-                <label id='Valor Sistema'><strong>Valor Sistema: </strong>{venda.valor_unitsis}</label>
-                <label id='Valor Promoção'><strong>Valor Promoção: </strong>{venda.valor_unitpro}</label>
+                <label id='Valor Sistema'><strong>Valor Sistema: </strong>{parseInt(venda.valor_unitsis).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
+                <label id='Valor Promoção'><strong>Valor Promoção: </strong>{parseInt(venda.valor_unitpro).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
                 <IconButton id='delete' onClick={() => DeletarCorpo(venda.key)}><DeleteIcon/></IconButton>
             </div>
             )}

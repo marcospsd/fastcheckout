@@ -6,8 +6,6 @@ import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import IconButton  from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { maxWidth } from '@mui/system';
-import { WindowSharp } from '@mui/icons-material';
 
 
 
@@ -20,23 +18,25 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
 
     const Adicionar = () => {
         if (formapag !== "") {
-        setForm({...formData, 
-            total_venda: totalvenda,            
-            formavenda: [
-            ... formData.formavenda,
-            { 
-            forma: formapag, 
-            parcelas: parcelas,
-            valor: valor,
-            ident: key+1,
-        },
-        ],
-    }
-    )
-        setKey(key+1)
-        setFormaPag("")
-        setParcelas("")
-        setValor("")
+            if (valor !== "") {
+                setForm({...formData, 
+                    total_venda: totalvenda,            
+                    formavenda: [
+                    ... formData.formavenda,
+                    { 
+                    forma: formapag, 
+                    parcelas: parcelas,
+                    valor: valor,
+                    ident: key+1,
+                },
+                ],
+            }
+            )
+                setKey(key+1)
+                setFormaPag("")
+                setParcelas("")
+                setValor("")
+            }
         } else {
             window.alert("não pode adicionar vazio !")
         }
@@ -114,8 +114,9 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
                 </Select>
             </div>
             <div className="labelforma">
-                <TextField label="Parcelas" type="number" onChange={(e) => setParcelas(e.target.value)} value={parcelas} maxLenght="1"/>
-                <TextField label="Valor" onChange={(e) => setValor(e.target.value)} value={valor}/>
+                <TextField id="dump" label="Parcelas" type="number" onChange={(e) => setParcelas(e.target.value)} value={parcelas} maxLenght="1"/>
+                <p>||</p>
+                <TextField id="dump" label="Valor" type="number" onChange={(e) => setValor(e.target.value)} value={valor}/>
             </div>
             <div className="buttonadd-forma">
                 <Button id="next-forma" variant="contained" onClick={Adicionar} fullWidth>Adicionar</Button>
