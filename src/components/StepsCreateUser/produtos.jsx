@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import IconButton  from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { api } from '../../services/api';
+import InputAdornment from '@mui/material/InputAdornment';
+import PercentIcon from '@mui/icons-material/Percent';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
@@ -16,6 +18,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [valorpro, setValorPro] = useState("")
     const [pesquisa, setPesquisa] = useState("")
     const [resultado, setResultado] = useState([])
+    const [porcdesc, setPorcDesc] = useState("")
     const [key, setKey] = useState(0)
 
 
@@ -40,6 +43,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         setValorSis("")
         setValorPro("")
         setPesquisa("")
+        setPorcDesc("")
         setResultado([])
         } else {
             window.alert("não pode adicionar vazio !")
@@ -60,6 +64,20 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         setForm({...formData, corpovenda: newForma})
     }
 
+    const DesctoValue = (id) => {
+        if (id !== "") {
+            const porcento = id/100
+            const produto = 1-porcento
+            setValorPro(Math.round((valorsis*produto)))
+        }
+    }
+
+    const ValuetoDesc = (id) => {
+        if (id !== "") {
+            const porcento = (1 - (valorpro / valorsis )) * 100
+            setPorcDesc(Math.round(porcento))
+        }
+    }
 
     return (
         <div className='container-products'>
@@ -72,10 +90,13 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
                     getOptionLabel={(resultados) => `${resultados.codigo} - ${resultados.descricao}`}
                     onChange = {(resultado, newResultado) => {
                         if (newResultado.codigo !== "") {
+                            const result = ((newResultado.valor_unitpro / newResultado.valor_unitsis) - 1) * -100
                             setCodPro(newResultado.codigo)
                             setDescriPro(newResultado.descricao)
                             setValorSis(newResultado.valor_unitsis)
                             setValorPro(newResultado.valor_unitpro)
+                            setPorcDesc(Math.round(result))
+                            
                         }
                         else { return; }
                     }}
@@ -83,13 +104,24 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
                     renderInput={(params) => <TextField {...params} label="Pesquise pela Descrição do Produto" onChange={(e) => Pesquisar(e.target.value)} value={pesquisa} />}
                     />
                 </div>
-                <div className='col-products'>
-                <TextField label='Codigo' value={codpro} disabled/>
-                <TextField label='Descricao' value={descripro} disabled/>
+                <div className='col-descri'>
+                <TextField label='Descricao' value={descripro} disabled size="small" fullWidth/>
                 </div>
                 <div className='col-products'>
-                <TextField label='Valor Sistema' value={valorsis} disabled/>
-                <TextField label='Valor Promoção' value={valorpro} onChange={(e) => setValorPro(e.target.value)} disabled/>
+                <TextField label='Codigo' value={codpro} disabled size="small" fullWidth/>
+                <TextField label='Valor Sistema' value={valorsis} disabled size="small" fullWidth/>
+                </div>
+                <div className='col-products'>
+                <TextField label='Desconto' value={porcdesc} size="small" onChange={(e) => setPorcDesc(e.target.value)} 
+                onBlur={ () => DesctoValue(porcdesc)} fullWidth
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <PercentIcon />
+                        </InputAdornment>
+                    ),
+                    }}/>
+                <TextField label='Valor Promoção' value={valorpro} onChange={(e) => setValorPro(e.target.value)} size="small" onBlur={ () => ValuetoDesc(valorpro)} fullWidth/>
                 </div>
                 
             </div>
@@ -100,6 +132,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
                 <label id='Descricao'><strong>Descricao: </strong>{venda.descripro}</label>
                 <label id='Valor Sistema'><strong>Valor Sistema: </strong>{parseInt(venda.valor_unitsis).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
                 <label id='Valor Promoção'><strong>Valor Promoção: </strong>{parseInt(venda.valor_unitpro).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
+                <label id='Desconto'><strong>Desconto: </strong>{Math.round(((venda.valor_unitpro / venda.valor_unitsis) - 1) * -100)} %</label>
                 <IconButton id='delete' onClick={() => DeletarCorpo(venda.key)}><DeleteIcon/></IconButton>
             </div>
             )}

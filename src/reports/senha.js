@@ -107,7 +107,7 @@ function SenhaVenda(data) {
             height: 297,
         },
         pageMargins: [1, 0, 1, 0],
-        
+        pages: 2,
 
         header: [titulo],
         content: [listdata],

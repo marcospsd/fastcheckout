@@ -14,6 +14,7 @@ import { CircularProgress } from "@mui/material";
 import { useSWRConfig } from 'swr'
 
 import ComprovanteVenda from '../../reports/venda';
+import SenhaVenda from '../../reports/senha';
 import { api, deleteVendas } from '../../services/api';
 
 

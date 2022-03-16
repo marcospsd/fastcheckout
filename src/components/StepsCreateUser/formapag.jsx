@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import IconButton  from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import FormControl from '@mui/material/FormControl';
 
 
 export const FormaPagForm = ({ formData, setForm, navigation }) => {
@@ -16,35 +16,44 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
     const [totalvenda, setTotalvenda] = useState("")
     const [key, setKey] = useState(0)
 
+    
+    const quantidadevendas = formData.corpovenda.map(x => x).length;
+    const total_venda = formData.corpovenda.map(x => x.valor_unitpro).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+    const saldo = (formData.corpovenda.map(x => x.valor_unitpro).reduce((a, b) => parseInt(a) + parseInt(b), 0)) - (formData.formavenda.map(x => x.valor).reduce((a, b) => parseInt(a) + parseInt(b), 0))
+
+
     const Adicionar = () => {
         if (formapag !== "") {
             if (valor !== "") {
-                setForm({...formData, 
-                    total_venda: totalvenda,            
-                    formavenda: [
-                    ... formData.formavenda,
-                    { 
-                    forma: formapag, 
-                    parcelas: parcelas,
-                    valor: valor,
-                    ident: key+1,
-                },
-                ],
-            }
-            )
-                setKey(key+1)
-                setFormaPag("")
-                setParcelas("")
-                setValor("")
+                if (saldo-valor > -1) {
+                    setForm({...formData, 
+                        total_venda: totalvenda,            
+                        formavenda: [
+                        ... formData.formavenda,
+                        { 
+                        forma: formapag, 
+                        parcelas: parcelas,
+                        valor: valor,
+                        ident: key+1,
+                    },
+                    ],
+                }
+                )
+                    setKey(key+1)
+                    setFormaPag("")
+                    setParcelas("")
+                    setValor("")
+                } else {
+                    window.alert('o Valor informado é maior que o saldo devedor !')
+                }
+               
             }
         } else {
             window.alert("não pode adicionar vazio !")
         }
     }
 
-    const quantidadevendas = formData.corpovenda.map(x => x).length;
-    const total_venda = formData.corpovenda.map(x => x.valor_unitpro).reduce((a, b) => parseInt(a) + parseInt(b), 0)
-    const saldo = (formData.corpovenda.map(x => x.valor_unitpro).reduce((a, b) => parseInt(a) + parseInt(b), 0)) - (formData.formavenda.map(x => x.valor).reduce((a, b) => parseInt(a) + parseInt(b), 0))
+
 
     const SelecaoParcela = (id) => {
         switch (id) {
@@ -52,6 +61,9 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
                     setParcelas("1")
 
             case "DP":
+                    setParcelas("1")
+
+            case "CD":
                     setParcelas("1")
             } 
     }
@@ -74,7 +86,6 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
         setForm({...formData, formavenda: newForma})
     }
 
-    console.log(formData)
     return (
         <div className="container-formapag">
             <div className='tittle-formapag'>
@@ -95,9 +106,10 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
                 </div>   
             </div>
             <div className="selectforma">
-            <InputLabel id="demo-simple-select-label">Forma de Pagamento</InputLabel>
+            <FormControl fullWidth>
+            <InputLabel id="forma1">Forma de Pagamento</InputLabel>
                 <Select
-                labelId="demo-simple-select-label"
+                labelId="forma1"
                 id="demo-simple-select"
                 value={formapag}
                 onChange={(e) => {
@@ -105,18 +117,44 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
                     setFormaPag(e.target.value)
 
                 }}
-                fullWidth
+                label="Forma de Pagamento"
                 >
                     <MenuItem value="DH">Dinheiro</MenuItem>
                     <MenuItem value="CC">Cartão de Crédito</MenuItem>
                     <MenuItem value="CD">Cartão de Débito</MenuItem>
                     <MenuItem value="DP">Depósito em Conta</MenuItem>
                 </Select>
+                </FormControl>
             </div>
             <div className="labelforma">
-                <TextField id="dump" label="Parcelas" type="number" onChange={(e) => setParcelas(e.target.value)} value={parcelas} maxLenght="1"/>
-                <p>||</p>
-                <TextField id="dump" label="Valor" type="number" onChange={(e) => setValor(e.target.value)} value={valor}/>
+                <FormControl fullWidth>
+                    <InputLabel id="Label1">Parcelas</InputLabel>
+                    <Select
+                    labelId="Label1"
+                    id="demo-simple-select"
+                    value={parcelas}
+                    label= "Parcelas"
+                    onChange={(e) => {
+                        setParcelas(e.target.value)
+                    
+                    }}
+                    >
+                        
+                        <MenuItem value="1">1</MenuItem>
+                        { total_venda > 200 && formapag == 'CC' && <MenuItem value="2">2</MenuItem> }
+                        { total_venda > 600 && formapag == 'CC' && <MenuItem value="3">3</MenuItem> }
+                        { total_venda > 800 && formapag == 'CC' && <MenuItem value="4">4</MenuItem> }
+                        { total_venda > 1000 && formapag == 'CC' && <MenuItem value="5">5</MenuItem> }
+                        { total_venda > 1200 && formapag == 'CC' && <MenuItem value="6">6</MenuItem> }
+                        { total_venda > 1400 && formapag == 'CC' && <MenuItem value="7">7</MenuItem> }
+                        { total_venda > 1600 && formapag == 'CC' && <MenuItem value="8">8</MenuItem> }
+                        { total_venda > 1800 && formapag == 'CC' && <MenuItem value="9">9</MenuItem> }
+                        { total_venda > 2000 && formapag == 'CC' && <MenuItem value="10">10</MenuItem> }
+
+                    
+                    </Select>
+                </FormControl>
+                <TextField id="dump" label="Valor" type="number" onChange={(e) => setValor(e.target.value)} value={valor} fullWidth/>
             </div>
             <div className="buttonadd-forma">
                 <Button id="next-forma" variant="contained" onClick={Adicionar} fullWidth>Adicionar</Button>
@@ -144,12 +182,8 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
             <div className="formpag-buttons">
             <Button id='back-forma' onClick={() => navigation.previous()} variant="contained">Back</Button>
             <Button id='next-forma' onClick={() => {
-                if (saldo !== 0) {
-                    window.alert("Saldo deve está zerado !")
-                } else {
                     setForm({...formData, total_venda: total_venda})
                     navigation.next() 
-                }
                    
                 }} variant="contained">Next</Button>    
             </div>
