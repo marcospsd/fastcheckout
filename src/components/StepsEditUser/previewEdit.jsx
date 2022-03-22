@@ -13,9 +13,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 
-export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state, createvenda}) => {
+export const PreviewForm = ({ formData, setForm, navigation, fecharModal, criarvenda}) => {
   const [ openmodal, setOpenModal] = useState(false)
   const [ alert, setAlert] = useState('')
+
 
   const formapagamento = (id) => {
     switch (id) {
@@ -30,12 +31,12 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state,
         }
 }
 
-  console.log(formData)
+
     return (
         <div>
           <Box id='box-view-itens'>
               <div id='tittle-modal'>
-                <label><strong>RESUMO DA VENDA</strong></label>
+                <label><strong>ATUALIZAÇÃO DE VENDA</strong></label>
               </div>
               <div id='dadosvenda'>
                 <div className="row">
@@ -95,22 +96,13 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state,
               <div id='opcoes-preview'>
                 <Button id='back-forma' onClick={() => navigation.previous()} variant="contained">Back</Button>
                 <Button id='back-forma' onClick={async () => {
-                    await api.post(`/api/v2/venda/`, formData)
+                    console.log(formData)
+                    await api.put(`/api/v2/venda/${formData.ordem}/`, formData )
                     .then((res) => {
-                      if (res.status !== 201) {
-                        setAlert("Algo deu errado !")
-                        setOpenModal(true)
-                      } else {
-                        setAlert(`Criado com sucesso, Ordem:${res.data.ordem}`)
-                        setOpenModal(false)
-                        createvenda(formData)
-                        SenhaVenda(res.data)
-                        fecharModal()
-                        navigation.next()
-                        setForm(state)
-                      }
+                      fecharModal()
+                      criarvenda()
                     })
-                }} variant="contained">Enviar</Button>
+                }} variant="contained">Atualizar</Button>
               </div>
               
               <Snackbar open={openmodal} autoHideDuration={5000} onClose={() => setOpenModal(false)}>

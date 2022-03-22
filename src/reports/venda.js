@@ -266,6 +266,7 @@ function ComprovanteVenda(data) {
             fit: '50',
             alignment: 'center'
         },
+        
 
     ];
 

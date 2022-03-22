@@ -19,7 +19,8 @@ const steps = [
 ]
 
 
-const ModalCreate = ({open, setOpen}) => {
+const ModalCreate = ({open, setOpen, criarvenda}) => {
+    const createvenda = (venda) => criarvenda(venda)
     const codvend = (localStorage.getItem('codvend')).replace('"', '').replace('"', '')
     const nomevendedor = (localStorage.getItem('nome')).replace('"', '').replace('"', '').toLocaleUpperCase()
     const state = {
@@ -48,7 +49,7 @@ const ModalCreate = ({open, setOpen}) => {
         setForm(state)
     }
     
-    const props = { formData, setForm, navigation, fecharModal, state }
+    const props = { formData, setForm, navigation, fecharModal, state, createvenda }
     switch(step.id) {
         case 'cadastro':
             return (
@@ -120,7 +121,7 @@ const ModalCreate = ({open, setOpen}) => {
                         id='box-create-venda'
                     >
                         <IconButton id="closeitem" onClick={CloseModal}><CloseIcon/></IconButton>
-                        <PreviewForm { ...props }/>
+                        <PreviewForm { ...props } criarvenda={createvenda}/>
                     </Box>
                 </Modal>
                  : null }

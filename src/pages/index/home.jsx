@@ -11,10 +11,9 @@ import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import { CircularProgress } from "@mui/material";
-import { useSWRConfig } from 'swr'
+
 
 import ComprovanteVenda from '../../reports/venda';
-import SenhaVenda from '../../reports/senha';
 import { api, deleteVendas } from '../../services/api';
 
 
@@ -27,11 +26,10 @@ import ModalCreate from '../../components/Modal/ModalCreateVenda';
 const HomePage = () => {
     const [open, setOpen] = React.useState(false);
     const openModal = () => { setOpen(prev => !prev)}
-    const user = (localStorage.getItem('nome')).replace('"', '').replace('"', '').toUpperCase()
+    const user = ((localStorage.getItem('nome')).replace('"', '').replace('"', '').toUpperCase()).toString()
     const [search, setSearch] = React.useState("");
     const { data, mutate } = useFetch('/api/v2/venda/');
     const { logout } = React.useContext(AuthContext);
-    // const { mutate } = useSWRConfig()
     const handleLogout = () => {
         logout()
 
@@ -83,6 +81,9 @@ const HomePage = () => {
   
       }
 
+      const CriarVenda = () => {
+          mutate()
+      }
     
 
 //// Conversão para Reais dos dados da Api    
@@ -108,7 +109,7 @@ const HomePage = () => {
             <div className="Diarios">
                 <div id="usuario">
                     <p className="title"><strong>Usuário</strong></p> 
-                    <p className="response">{user}</p>
+                    <p className="response">{user.split(' ').slice(0, 2).join(' ')}</p>
                 </div>    
                 <div id="totalvendas">
                     <p className="title"><strong>Faturamento</strong></p>
@@ -123,7 +124,7 @@ const HomePage = () => {
                 <IconButton id="addvenda" aria-label="add to shopping cart" size="large" onClick={openModal}><ModalCreate/>
                     <AddShoppingCartIcon fontSize="inherit"/>
                 </IconButton>
-                <ModalCreate open={open} setOpen={setOpen}></ModalCreate>
+                <ModalCreate open={open} criarvenda={CriarVenda} setOpen={setOpen}></ModalCreate>
             </div>
             <TextField id="searchinput" label="Pesquise pela Ordem/Nome" variant="outlined"value={search} onChange={(event) => { setSearch(event.target.value) }}
              InputProps={{
@@ -141,6 +142,8 @@ const HomePage = () => {
                         } else if (venda.ordem.toString().includes(search)) {
                             return venda
                         } else if ((venda.nome.toLowerCase().includes(search.toLowerCase()))) {
+                            return venda
+                         } else if ((venda.cpf.includes(search))) {
                             return venda
                          }
                     }
@@ -163,12 +166,13 @@ const HomePage = () => {
                                 acaodeletar={AcaoDeletar}
                                 aprovarcompra={AprovarCompra}
                                 retornarcompra={RetornaCompra}
-    
-
+                                criarvenda={CriarVenda}
+                                
                         /> 
+                        
                 </div>
                 ))}
-            
+               
             </div>
             
         </div>

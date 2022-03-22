@@ -10,19 +10,24 @@ import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore
 import PrintIcon from '@mui/icons-material/Print';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
+import CloseIcon from '@mui/icons-material/Close';
+import ModalEdit from './ModalEditVenda'
+
+import SenhaVenda from '../../reports/senha'
+import ComprovanteVenda from '../../reports/venda'
 
 
-
-import { useSWRConfig } from 'swr'
 
 
   const BasicModal = (props) => {
     const data = props.value
+    const criarvenda = props.criarvenda
     const [open, setOpen] = React.useState(false);
+    const [openedit, setOpenEdit] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     // const { mutate } = useSWRConfig();
-
+  
     if (!data) {
       return <button onClick={handleOpen}>Open modal</button>
     }
@@ -52,11 +57,15 @@ import { useSWRConfig } from 'swr'
         case "P":
         return (
           <>
-          <IconButton><EditIcon/></IconButton>
+          <IconButton onClick={() => {
+            setOpenEdit(true)
+            }}><EditIcon/></IconButton>
+          
 
           <IconButton onClick={() => {
             handleClose()
             props.aprovarcompra(data)
+            ComprovanteVenda(data)
 
           }}><FactCheckIcon/></IconButton>
 
@@ -65,6 +74,8 @@ import { useSWRConfig } from 'swr'
               props.acaodeletar(data.ordem)
                 
               }} id='delete'><DeleteIcon/></IconButton>
+
+          <IconButton onClick={() => setOpen(false)}><CloseIcon/></IconButton>
           </>
         )
         
@@ -82,6 +93,10 @@ import { useSWRConfig } from 'swr'
                 handleClose()
                 props.comprovantevenda(data)
             }}><PrintIcon/></IconButton>
+
+            <IconButton onClick={() => setOpen(false)}><CloseIcon/></IconButton>
+
+
             </>
           
           ) 
@@ -162,9 +177,8 @@ import { useSWRConfig } from 'swr'
               </table>
             </div>
             <div id='opcoes'>
-              
               { ButtonCorreto(data) }
-
+              <ModalEdit open={openedit} setOpenEdit={setOpenEdit} openedit={openedit} value={data} criarvenda={criarvenda}/>
             </div>
         </Box>
       </Modal>

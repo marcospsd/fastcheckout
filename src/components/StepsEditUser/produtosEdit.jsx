@@ -19,7 +19,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [pesquisa, setPesquisa] = useState("")
     const [resultado, setResultado] = useState([])
     const [porcdesc, setPorcDesc] = useState("")
-    const [key, setKey] = useState(0)
+    const [key, setKey] = useState(1000)
 
 
     const Adicionar = () => {
@@ -32,7 +32,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             quantidade: 1,
             valor_unitsis: valorsis,
             valor_unitpro: valorpro,
-            key: key+1,
+            id: key+1,
         },
         ],
     }
@@ -60,7 +60,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     }
 
     const DeletarCorpo = (id) => {
-        const newForma = formData.corpovenda.filter(x => x.key !== id)
+        const newForma = formData.corpovenda.filter(x => x.id !== id)
         setForm({...formData, corpovenda: newForma})
     }
 
@@ -138,13 +138,13 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             </div>
             <Button id='back' variant="contained" onClick={Adicionar}>Adicionar</Button>
             {formData.corpovenda.map((venda) =>
-            <div className='card-products' key={venda.key}>
+            <div className='card-products' key={venda.id}>
                 <label id='Codigo'><strong>Codigo: </strong>{venda.codpro}</label>
                 <label id='Descricao'><strong>Descricao: </strong>{venda.descripro}</label>
                 <label id='Valor Sistema'><strong>Valor Sistema: </strong>{parseInt(venda.valor_unitsis).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
                 <label id='Valor Promoção'><strong>Valor Promoção: </strong>{parseInt(venda.valor_unitpro).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
                 <label id='Desconto'><strong>Desconto: </strong>{Math.round(((venda.valor_unitpro / venda.valor_unitsis) - 1) * -100)} %</label>
-                <IconButton id='delete' onClick={() => DeletarCorpo(venda.key)}><DeleteIcon/></IconButton>
+                <IconButton id='delete' onClick={() => DeletarCorpo(venda.id)}><DeleteIcon/></IconButton>
             </div>
             )}
             <div className='buttons-products'>

@@ -97,6 +97,7 @@ function SenhaVenda(data) {
             margin: [0,5,0,0],
             alignment: 'center'
         },
+        
     ];
 
     const rodape = [];
@@ -107,7 +108,6 @@ function SenhaVenda(data) {
             height: 297,
         },
         pageMargins: [1, 0, 1, 0],
-        pages: 2,
 
         header: [titulo],
         content: [listdata],
