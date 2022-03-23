@@ -13,4 +13,4 @@ RUN npm run build
 
 EXPOSE 80
 
-CMD ["serve", "-s", "build", "-l", "80"]
+ENTRYPOINT serve -s build -l 80
