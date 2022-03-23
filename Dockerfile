@@ -9,7 +9,7 @@ RUN npm install --silent
 
 COPY . ./
 
-RUN npm run biuld
+RUN npm biuld
 
 EXPOSE 80
 
