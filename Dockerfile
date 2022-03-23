@@ -9,8 +9,8 @@ RUN npm install --silent
 
 COPY . ./
 
-RUN npm biuld
+RUN npm run build
 
 EXPOSE 80
 
-CMD ["serve", "-s", "biuld", "-l", "80"]
+CMD ["serve", "-s", "build", "-l", "80"]
