@@ -8,6 +8,7 @@ import SenhaVenda from '../../reports/senha'
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -32,8 +33,7 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state,
 
   console.log(formData)
     return (
-        <div>
-          <Box id='box-view-itens'>
+        <div className="container-preview">
               <div id='tittle-modal'>
                 <label><strong>RESUMO DA VENDA</strong></label>
               </div>
@@ -101,10 +101,8 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state,
                         setAlert("Algo deu errado !")
                         setOpenModal(true)
                       } else {
-                        setAlert(`Criado com sucesso, Ordem:${res.data.ordem}`)
-                        setOpenModal(false)
-                        createvenda(formData)
                         SenhaVenda(res.data)
+                        createvenda(formData)
                         fecharModal()
                         navigation.next()
                         setForm(state)
@@ -112,15 +110,13 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state,
                     })
                 }} variant="contained">Enviar</Button>
               </div>
-              
               <Snackbar open={openmodal} autoHideDuration={5000} onClose={() => setOpenModal(false)}>
                     <Alert onClose={() => setOpenModal(false)} severity="error" sx={{ width: '75%' }}>
                         {alert}
                     </Alert>
                 </Snackbar>
 
-          </Box>
+          </div>
 
-      </div>
     )
 } 

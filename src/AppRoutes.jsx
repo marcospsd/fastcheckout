@@ -4,6 +4,7 @@ import LoginPage from "./pages/login/login";
 import HomePage from "./pages/index/home";
 import { AuthProvicer, AuthContext } from "./contexts/auth";
 import { useContext } from "react";
+import Test from "./pages/test/test";
 
 
 
@@ -27,6 +28,7 @@ const AppRoutes = () => {
             <AuthProvicer>
                 <Routes>
                     <Route exact path="/login" element={<LoginPage/>} />
+                    <Route exact path="/teste" element={<Test/>} />
                     <Route exact path="/" element={<Private><HomePage/></Private>} />
                 </Routes>
             </AuthProvicer>

@@ -8,6 +8,12 @@ import IconButton  from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FormControl from '@mui/material/FormControl';
 
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
 
 export const FormaPagForm = ({ formData, setForm, navigation }) => {
     const [formapag, setFormaPag] = useState("")
@@ -15,6 +21,8 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
     const [valor, setValor] = useState("")
     const [totalvenda, setTotalvenda] = useState("")
     const [key, setKey] = useState(0)
+    const [ open, setOpen] = useState(false)
+    const [ alert, setAlert] = useState('')
 
     
     const quantidadevendas = formData.corpovenda.map(x => x).length;
@@ -44,12 +52,14 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
                     setParcelas("")
                     setValor("")
                 } else {
-                    window.alert('o Valor informado é maior que o saldo devedor !')
+                    setAlert('o Valor informado é maior que o saldo devedor !')
+                    setOpen(true)
                 }
                
             }
         } else {
-            window.alert("não pode adicionar vazio !")
+            setAlert("Você deve adicionar as formas de pagamento")
+            setOpen(true)
         }
     }
 
@@ -86,6 +96,13 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
         setForm({...formData, formavenda: newForma})
     }
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
     return (
         <div className="container-formapag">
             <div className='tittle-formapag'>
@@ -182,12 +199,20 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
             <div className="formpag-buttons">
             <Button id='back-forma' onClick={() => navigation.previous()} variant="contained">Back</Button>
             <Button id='next-forma' onClick={() => {
+                if (saldo == 0) {
                     setForm({...formData, total_venda: total_venda})
                     navigation.next() 
-                   
-                }} variant="contained">Next</Button>    
+                } else {
+                    setAlert("Saldo não pode ser diferente de 0 !")
+                    setOpen(true)
+                }}} variant="contained">Next</Button>  
+ 
             </div>
-
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '90%' }}>
+                        {alert}
+                    </Alert>
+            </Snackbar> 
         </div>
     )
 }

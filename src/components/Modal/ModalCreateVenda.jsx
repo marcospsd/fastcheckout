@@ -59,7 +59,9 @@ const ModalCreate = ({open, setOpen, criarvenda}) => {
                         open={open}
                         onClose={() => setOpen(false)}
                         aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description">
+                        aria-describedby="modal-modal-description"
+                        disablePortal
+                        id='modal'>
                     <Box
                         id='box-create-venda'
                     >
@@ -78,7 +80,9 @@ const ModalCreate = ({open, setOpen, criarvenda}) => {
                         open={open}
                         onClose={() => setOpen(false)}
                         aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description">
+                        aria-describedby="modal-modal-description"
+                        disablePortal
+                        id='modal'>
                     <Box
                         id='box-create-venda'
                     >
@@ -97,7 +101,9 @@ const ModalCreate = ({open, setOpen, criarvenda}) => {
                         open={open}
                         onClose={() => setOpen(false)}
                         aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description">
+                        aria-describedby="modal-modal-description"
+                        disablePortal
+                        id='modal'>
                     <Box
                         id='box-create-venda'
                     >
@@ -116,7 +122,9 @@ const ModalCreate = ({open, setOpen, criarvenda}) => {
                         open={open}
                         onClose={() => setOpen(false)}
                         aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description">
+                        aria-describedby="modal-modal-description"
+                        disablePortal
+                        id='modal'>
                     <Box
                         id='box-create-venda'
                     >

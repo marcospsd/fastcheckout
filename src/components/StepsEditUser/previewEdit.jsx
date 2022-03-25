@@ -33,8 +33,7 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, criarv
 
 
     return (
-        <div>
-          <Box id='box-view-itens'>
+      <div className="container-preview">
               <div id='tittle-modal'>
                 <label><strong>ATUALIZAÇÃO DE VENDA</strong></label>
               </div>
@@ -102,6 +101,10 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, criarv
                       fecharModal()
                       criarvenda()
                     })
+                    .catch((err) => { 
+                      setAlert(err)
+                      setOpenModal(true)
+                    }) 
                 }} variant="contained">Atualizar</Button>
               </div>
               
@@ -111,8 +114,7 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, criarv
                     </Alert>
                 </Snackbar>
 
-          </Box>
+          </div>
 
-      </div>
     )
 } 

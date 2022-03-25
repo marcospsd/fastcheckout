@@ -274,10 +274,10 @@ function ComprovanteVenda(data) {
 
     const docDefinitions = {
         pageSize: {
-            width: 80,
-            height: 297,
+            width: 90,
+            height: 400,
         },
-        pageMargins: [1, 0, 1, 0],
+        pageMargins: [0, 0, 0, 0],
         
 
         header: [titulo],

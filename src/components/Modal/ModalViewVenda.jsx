@@ -13,8 +13,6 @@ import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import ModalEdit from './ModalEditVenda'
 
-import SenhaVenda from '../../reports/senha'
-import ComprovanteVenda from '../../reports/venda'
 
 
 
@@ -62,10 +60,10 @@ import ComprovanteVenda from '../../reports/venda'
             }}><EditIcon/></IconButton>
           
 
-          <IconButton onClick={() => {
-            handleClose()
+          <IconButton onClick={ async () => {
             props.aprovarcompra(data)
-            ComprovanteVenda(data)
+            handleClose()
+            
 
           }}><FactCheckIcon/></IconButton>
 

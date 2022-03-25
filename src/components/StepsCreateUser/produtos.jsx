@@ -9,7 +9,13 @@ import InputAdornment from '@mui/material/InputAdornment';
 import PercentIcon from '@mui/icons-material/Percent';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import MuiAlert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
 export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [codpro, setCodPro] = useState("")
@@ -20,7 +26,8 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [resultado, setResultado] = useState([])
     const [porcdesc, setPorcDesc] = useState("")
     const [key, setKey] = useState(0)
-
+    const [ open, setOpen] = useState(false)
+    const [ alert, setAlert] = useState('')
 
     const Adicionar = () => {
         if (codpro !== "") {
@@ -42,11 +49,12 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         setDescriPro("")
         setValorSis("")
         setValorPro("")
-        setPesquisa("")
         setPorcDesc("")
         setResultado([])
+        setPesquisa("")
         } else {
-            window.alert("não pode adicionar vazio !")
+            setAlert("Você deve adicionar algum item !")
+            setOpen(true)
         }
     }
 
@@ -54,7 +62,8 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const Pesquisar = async (pesquisa) => {
         if (pesquisa !== "") {
             api.get(`/api/v1/produto/${pesquisa}`)
-            .then((res) => {setResultado(res.data)})
+            .then((res) => {
+                setResultado(res.data)})
         }
         return;
     }
@@ -90,6 +99,14 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         } else { setValorPro(0)}
     }
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
+
     return (
         <div className='container-products'>
             <p>Produtos</p>
@@ -100,19 +117,21 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
                     id="combo-box-demo"
                     getOptionLabel={(resultados) => `${resultados.codigo} - ${resultados.descricao}`}
                     onChange = {(resultado, newResultado) => {
-                        if (newResultado.codigo !== "") {
+                        if (newResultado) {
                             const result = ((newResultado.valor_unitpro / newResultado.valor_unitsis) - 1) * -100
                             setCodPro(newResultado.codigo)
                             setDescriPro(newResultado.descricao)
                             setValorSis(newResultado.valor_unitsis)
                             setValorPro(newResultado.valor_unitpro)
                             setPorcDesc(Math.round(result))
-                            
+                
                         }
-                        else { return; }
+                        else { setPesquisa("") }
+                        
                     }}
+                    clearOnEscape
                     options={resultado}
-                    renderInput={(params) => <TextField {...params} label="Pesquise pela Descrição do Produto" onChange={(e) => Pesquisar(e.target.value)} value={pesquisa} />}
+                    renderInput={(params) => <TextField {...params} label="Pesquise pela Descrição do Produto" onChange={(e) => Pesquisar(e.target.value)} value="" />}
                     />
                 </div>
                 <div className='col-descri'>
@@ -150,9 +169,21 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             <div className='buttons-products'>
                 <Button id='back' onClick={() => navigation.previous()} variant="contained">Back</Button>
                 <Button id='next' onClick={() => {
+                    if (formData.corpovenda != "") {
                     navigation.next() 
+                    } else { setAlert("Não pode ser vazio !")
+                            setOpen(true)
+                    }
                 }} variant="contained">Next</Button>
+
             </div>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} fullWidth>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                        {alert}
+                    </Alert>
+            </Snackbar>
         </div>
+
+    
     )
 }

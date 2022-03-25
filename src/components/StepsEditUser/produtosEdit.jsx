@@ -9,6 +9,13 @@ import InputAdornment from '@mui/material/InputAdornment';
 import PercentIcon from '@mui/icons-material/Percent';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import MuiAlert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
 
 export const ProdutosForm = ({ formData, setForm, navigation }) => {
@@ -20,6 +27,8 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [resultado, setResultado] = useState([])
     const [porcdesc, setPorcDesc] = useState("")
     const [key, setKey] = useState(1000)
+    const [ open, setOpen] = useState(false)
+    const [ alert, setAlert] = useState('')
 
 
     const Adicionar = () => {
@@ -46,7 +55,8 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         setPorcDesc("")
         setResultado([])
         } else {
-            window.alert("não pode adicionar vazio !")
+            setAlert("Você deve adicionar algum item !")
+            setOpen(true)
         }
     }
 
@@ -89,6 +99,13 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         }
         } else { setValorPro(0)}
     }
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
 
     return (
         <div className='container-products'>
@@ -150,9 +167,18 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             <div className='buttons-products'>
                 <Button id='back' onClick={() => navigation.previous()} variant="contained">Back</Button>
                 <Button id='next' onClick={() => {
+                    if (formData.corpovenda != "") {
                     navigation.next() 
+                    } else { setAlert("Não pode ser vazio !")
+                            setOpen(true)
+                    }
                 }} variant="contained">Next</Button>
             </div>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} fullWidth>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                        {alert}
+                    </Alert>
+            </Snackbar>
         </div>
     )
 }

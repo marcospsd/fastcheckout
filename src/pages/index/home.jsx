@@ -58,12 +58,13 @@ const HomePage = () => {
         
       const AprovarCompra = async (venda) => {
         await api.put(`/api/v2/venda/${venda.ordem}/`, {...venda, status: 'F'})
+        .then((res) => ComprovanteVenda(venda))
         const updatedata = data.map((x) => {
             if (x.ordem == venda.ordem) {
                 return { ...x, status: 'F'}
             } else {return x}
         })
-        ComprovanteVenda(venda)
+        
         mutate(updatedata, false) 
   
       }
@@ -75,13 +76,12 @@ const HomePage = () => {
                 return { ...x, status: 'P'}
             } else {return x}
         })
-        //ComprovanteVenda(venda)
         mutate(rev, false) 
         
   
       }
 
-      const CriarVenda = () => {
+      const CriarVenda = (data) => {
           mutate()
       }
     

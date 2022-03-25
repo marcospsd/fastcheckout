@@ -1,18 +1,25 @@
 #box-create-venda {
-    position: relative;
+    position: absolute;
     padding: 1.5rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
     max-width: 100%;
+    max-height: 700px;
     height: auto;
     background: whitesmoke;
     border: 2px solid #000;
     size: 4;
     color: rgb(0, 0, 0);
     border-radius: 1.5rem;
+    overflow: overlay;
+    
 
+}
+
+#box-create-venda::-webkit-scrollbar {
+    width: 0px;
 }
 
 #closeitem {
@@ -190,6 +197,9 @@
     margin: 0 2rem;
 }
 
+.container-preview {
+    color:rgb(255, 255, 255)
+}
 
 #opcoes-preview {
     display: flex;

@@ -64,7 +64,13 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
         return true
     }
 
-
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
 
     return (
         <div className='container-cadastro'>
@@ -136,13 +142,9 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                 /> }
                 </InputMask>
 
-                <Snackbar open={open} autoHideDuration={4000} onClose={() => setOpen(false)}>
-                    <Alert onClose={() => setOpen(false)} severity="error" sx={{ width: '90%' }}>
-                        {alert}
-                    </Alert>
-                </Snackbar>
-
             </div>
+
+
                 <div className="cadastro-buttons"> 
                     <Button id="next" variant="contained" onClick={() => {
                         if (cpf == '') {
@@ -180,7 +182,11 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                         
                     }}>Proximo</Button>
                 </div>
-
+                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '90%' }}>
+                        {alert}
+                    </Alert>
+                </Snackbar>
         </div>
     )
 }
