@@ -49,7 +49,7 @@ const HomePage = () => {
     }
 
     const AcaoDeletar = async (id) => {
-            await api.delete(`/api/v2/venda/${id}`)
+            await api.delete(`/api/v2/venda/${id}/`)
             const updatedata = data.filter((x) => x.ordem !== id)
             mutate(updatedata, false)
 

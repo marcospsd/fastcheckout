@@ -40,12 +40,12 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state,
               <div id='dadosvenda'>
                 <div className="row">
                   <div className='col'>
-                    <label><strong>Vendedor: </strong>{formData.nomevend}</label>
+                    <label><strong>Vendedor: </strong>{formData.nomevendedor}</label>
                     <label><strong>CPF: </strong>{(formData.cpf).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</label>
               
                   </div>
                   <div className='col'>
-                    <label><strong>CodVend: </strong> {formData.codvend}</label>
+                    <label><strong>CodVend: </strong> {formData.vendedor}</label>
                     <label><strong>Total da Venda: </strong>{parseInt(formData.total_venda).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
                   </div>
                 </div>

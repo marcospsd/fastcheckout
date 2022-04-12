@@ -8,7 +8,7 @@ export function useFetch(url) {
 
         return response.data
         
-    //  }, { refreshInterval: 10000 })
+      //}, { refreshInterval: 10000 })
     })
     return {data, mutate}
 }

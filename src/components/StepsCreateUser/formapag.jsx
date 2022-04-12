@@ -158,15 +158,15 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
                     >
                         
                         <MenuItem value="1">1</MenuItem>
-                        { total_venda > 200 && formapag == 'CC' && <MenuItem value="2">2</MenuItem> }
-                        { total_venda > 600 && formapag == 'CC' && <MenuItem value="3">3</MenuItem> }
-                        { total_venda > 800 && formapag == 'CC' && <MenuItem value="4">4</MenuItem> }
-                        { total_venda > 1000 && formapag == 'CC' && <MenuItem value="5">5</MenuItem> }
-                        { total_venda > 1200 && formapag == 'CC' && <MenuItem value="6">6</MenuItem> }
-                        { total_venda > 1400 && formapag == 'CC' && <MenuItem value="7">7</MenuItem> }
-                        { total_venda > 1600 && formapag == 'CC' && <MenuItem value="8">8</MenuItem> }
-                        { total_venda > 1800 && formapag == 'CC' && <MenuItem value="9">9</MenuItem> }
-                        { total_venda > 2000 && formapag == 'CC' && <MenuItem value="10">10</MenuItem> }
+                        { total_venda > 200 && formapag === 'CC' && <MenuItem value="2">2</MenuItem> }
+                        { total_venda > 600 && formapag === 'CC' && <MenuItem value="3">3</MenuItem> }
+                        { total_venda > 800 && formapag === 'CC' && <MenuItem value="4">4</MenuItem> }
+                        { total_venda > 1000 && formapag === 'CC' && <MenuItem value="5">5</MenuItem> }
+                        { total_venda > 1200 && formapag === 'CC' && <MenuItem value="6">6</MenuItem> }
+                        { total_venda > 1400 && formapag === 'CC' && <MenuItem value="7">7</MenuItem> }
+                        { total_venda > 1600 && formapag === 'CC' && <MenuItem value="8">8</MenuItem> }
+                        { total_venda > 1800 && formapag === 'CC' && <MenuItem value="9">9</MenuItem> }
+                        { total_venda > 2000 && formapag === 'CC' && <MenuItem value="10">10</MenuItem> }
 
                     
                     </Select>

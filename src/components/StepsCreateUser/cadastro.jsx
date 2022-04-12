@@ -147,7 +147,7 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
 
                 <div className="cadastro-buttons"> 
                     <Button id="next" variant="contained" onClick={() => {
-                        if (cpf == '') {
+                        if (cpf === '') {
                             setAlert('CPF Não pode ser vazio !')
                             setOpen(true)
                             return;
@@ -157,7 +157,7 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                             setOpen(true)
                             return;
                         }
-                        if (nome == '') {
+                        if (nome === '') {
                             setAlert('Nome não pode ser vazio !')
                             setOpen(true)
                             return;
@@ -169,7 +169,7 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                             telefone: telefone,
                         })
                         
-                        if (cpf.replace(/[^0-9]/g, '') == '99999999999') {
+                        if (cpf.replace(/[^0-9]/g, '') === '99999999999') {
                             navigation.next()
                         } else {
                             if (userbanco == false) {

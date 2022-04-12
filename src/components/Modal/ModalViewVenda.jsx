@@ -15,8 +15,6 @@ import ModalEdit from './ModalEditVenda'
 
 
 
-
-
   const BasicModal = (props) => {
     const data = props.value
     const criarvenda = props.criarvenda
@@ -68,9 +66,10 @@ import ModalEdit from './ModalEditVenda'
           }}><FactCheckIcon/></IconButton>
 
           <IconButton onClick={() => {
+            if(window.confirm("Deseja excluir essa venda ?")) {
               handleClose()
               props.acaodeletar(data.ordem)
-                
+            }
               }} id='delete'><DeleteIcon/></IconButton>
 
           <IconButton onClick={() => setOpen(false)}><CloseIcon/></IconButton>

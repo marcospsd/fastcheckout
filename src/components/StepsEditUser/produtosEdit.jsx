@@ -29,6 +29,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [key, setKey] = useState(1000)
     const [ open, setOpen] = useState(false)
     const [ alert, setAlert] = useState('')
+    const [ keyautcomplete, setKeyAutocomplete] = useState(false)
 
 
     const Adicionar = () => {
@@ -54,6 +55,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         setPesquisa("")
         setPorcDesc("")
         setResultado([])
+        setKeyAutocomplete(false)
         } else {
             setAlert("Você deve adicionar algum item !")
             setOpen(true)
@@ -115,6 +117,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
                 <Autocomplete
                     disablePortal
                     id="combo-box-demo"
+                    key={keyautcomplete}
                     getOptionLabel={(resultados) => `${resultados.codigo} - ${resultados.descricao}`}
                     onChange = {(resultado, newResultado) => {
                         if (newResultado.codigo !== "") {
@@ -124,6 +127,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
                             setValorSis(newResultado.valor_unitsis)
                             setValorPro(newResultado.valor_unitpro)
                             setPorcDesc(Math.round(result))
+                            setKeyAutocomplete(true)
                             
                         }
                         else { return; }

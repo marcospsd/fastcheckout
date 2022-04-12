@@ -9,6 +9,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import PercentIcon from '@mui/icons-material/Percent';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import LeitorBarCode from '../CodBar/barcode';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
@@ -28,7 +31,10 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [key, setKey] = useState(0)
     const [ open, setOpen] = useState(false)
     const [ alert, setAlert] = useState('')
+    const [ openvideo, setOpenVideo] = useState(false)
+    const [ keyautcomplete, setKeyAutocomplete] = useState(false)
 
+    console.log(codpro)
     const Adicionar = () => {
         if (codpro !== "") {
         setForm({...formData, corpovenda: [
@@ -52,6 +58,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         setPorcDesc("")
         setResultado([])
         setPesquisa("")
+        setKeyAutocomplete(false)
         } else {
             setAlert("Você deve adicionar algum item !")
             setOpen(true)
@@ -60,10 +67,13 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
 
 
     const Pesquisar = async (pesquisa) => {
+        setPesquisa(pesquisa)
         if (pesquisa !== "") {
             api.get(`/api/v1/produto/${pesquisa}`)
             .then((res) => {
-                setResultado(res.data)})
+                setResultado(res.data)
+                
+            })
         }
         return;
     }
@@ -112,9 +122,24 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             <p>Produtos</p>
             <div className='label-products'>
                 <div className='col-search-products'>
+                <IconButton>
+                    {/* <CameraAltIcon onClick={() => setOpenVideo(true)}/> */}
+                </IconButton>
+                {openvideo && <LeitorBarCode 
+                                openvideo={openvideo} 
+                                setOpenVideo={setOpenVideo}
+                                setDescriPro={setDescriPro}
+                                setCodPro={setCodPro}
+                                setValorPro={setValorPro}
+                                setValorSis={setValorSis}
+                                />
+                
+                
+                }                
                 <Autocomplete
                     disablePortal
                     id="combo-box-demo"
+                    key={keyautcomplete}
                     getOptionLabel={(resultados) => `${resultados.codigo} - ${resultados.descricao}`}
                     onChange = {(resultado, newResultado) => {
                         if (newResultado) {
@@ -124,14 +149,15 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
                             setValorSis(newResultado.valor_unitsis)
                             setValorPro(newResultado.valor_unitpro)
                             setPorcDesc(Math.round(result))
+                            setKeyAutocomplete(true)
                 
                         }
                         else { setPesquisa("") }
                         
                     }}
-                    clearOnEscape
+                    
                     options={resultado}
-                    renderInput={(params) => <TextField {...params} label="Pesquise pela Descrição do Produto" onChange={(e) => Pesquisar(e.target.value)} value="" />}
+                    renderInput={(params) => <TextField {...params} label="Pesquise pela Descrição do Produto" onChange={(e) => Pesquisar(e.target.value)} value={pesquisa}/>}
                     />
                 </div>
                 <div className='col-descri'>

@@ -20,8 +20,9 @@ export const AuthProvicer = ({children}) => {
         const codvend = localStorage.getItem('codvend');
 
         if(recoveredUser && token) {
-            setUser(JSON.parse(recoveredUser));
             api.defaults.headers.Authorization = `token ${token}`
+            setUser(JSON.parse(recoveredUser));
+            
         }
         setLoading(false);
     }, []);
