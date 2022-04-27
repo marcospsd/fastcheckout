@@ -7,14 +7,14 @@ import './charts.css'
 
 const ChartsView = () => {
     const { data } = useFetch('/api/v2/venda/')
-    
+
     if (!data) {
         return <p>carregando ...</p>
     }
 
     return (
-        <div className="container-charts">
-            <ChartsBarra data={data}/>
+        <div className="container">
+            { data && <ChartsBarra data={data}/>}
         </div>
         
        
