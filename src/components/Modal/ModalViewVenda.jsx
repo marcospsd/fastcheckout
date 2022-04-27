@@ -11,7 +11,8 @@ import PrintIcon from '@mui/icons-material/Print';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
-import ModalEdit from './ModalEditVenda'
+import ModalEdit from './ModalEditVenda';
+import ComprovanteVenda from '../../reports/venda';
 
 
 
@@ -87,8 +88,8 @@ import ModalEdit from './ModalEditVenda'
               }><SettingsBackupRestoreIcon /></IconButton>
            
             <IconButton onClick={() => {
-                handleClose()
-                props.comprovantevenda(data)
+              handleClose()
+              ComprovanteVenda(data)
             }}><PrintIcon/></IconButton>
 
             <IconButton onClick={() => setOpen(false)}><CloseIcon/></IconButton>

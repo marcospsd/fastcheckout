@@ -34,10 +34,10 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [ openvideo, setOpenVideo] = useState(false)
     const [ keyautcomplete, setKeyAutocomplete] = useState(false)
 
-    console.log(codpro)
     const Adicionar = () => {
         if (codpro !== "") {
-        setForm({...formData, corpovenda: [
+            if (valorsis >= valorpro){
+            setForm({...formData, corpovenda: [
             ... formData.corpovenda,
             { 
             codpro: codpro, 
@@ -58,7 +58,11 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         setPorcDesc("")
         setResultado([])
         setPesquisa("")
-        setKeyAutocomplete(false)
+        setKeyAutocomplete(false)}
+        else {
+            setAlert("O valor do Sistema não pode ser menor que o Valor Promocional")
+            setOpen(true)
+        }
         } else {
             setAlert("Você deve adicionar algum item !")
             setOpen(true)

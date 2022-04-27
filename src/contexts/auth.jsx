@@ -38,16 +38,33 @@ export const AuthProvicer = ({children}) => {
         const loggedUser = response.data.nome
         const token = response.data.token
         const codvend = response.data.codvend
+        const tipouser = response.data.tipouser
 
         localStorage.setItem("nome", JSON.stringify(loggedUser));
         localStorage.setItem("token", token);
         localStorage.setItem("codvend", JSON.stringify(codvend));
+        localStorage.setItem("tipouser", JSON.stringify(tipouser))
     
 
         api.defaults.headers.Authorization = `token ${token}`
 
         setUser(loggedUser);
-        navigate("/")
+
+        switch (tipouser) {
+            case "C":
+                navigate("/")
+                break
+            case "V":
+                navigate("/")
+                break
+            case "E":
+                navigate("/estoque")
+                break
+            case "A":
+                navigate("/charts")
+                break
+        }
+        
         } catch(e){
             window.alert("Login ou senha Incorretos")
         };
@@ -57,6 +74,7 @@ export const AuthProvicer = ({children}) => {
         localStorage.removeItem("nome")
         localStorage.removeItem("token")
         localStorage.removeItem("codvend")
+        localStorage.removeItem("tipouser")
 
         api.defaults.headers.Authorization = null;
 

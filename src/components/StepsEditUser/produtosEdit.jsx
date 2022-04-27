@@ -26,7 +26,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const [pesquisa, setPesquisa] = useState("")
     const [resultado, setResultado] = useState([])
     const [porcdesc, setPorcDesc] = useState("")
-    const [key, setKey] = useState(1000)
+    const [key, setKey] = useState(10000)
     const [ open, setOpen] = useState(false)
     const [ alert, setAlert] = useState('')
     const [ keyautcomplete, setKeyAutocomplete] = useState(false)
@@ -34,7 +34,8 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
 
     const Adicionar = () => {
         if (codpro !== "") {
-        setForm({...formData, corpovenda: [
+            if (valorsis >= valorpro){
+            setForm({...formData, corpovenda: [
             ... formData.corpovenda,
             { 
             codpro: codpro, 
@@ -42,7 +43,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             quantidade: 1,
             valor_unitsis: valorsis,
             valor_unitpro: valorpro,
-            id: key+1,
+            key: key+1,
         },
         ],
     }
@@ -52,10 +53,14 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         setDescriPro("")
         setValorSis("")
         setValorPro("")
-        setPesquisa("")
         setPorcDesc("")
         setResultado([])
-        setKeyAutocomplete(false)
+        setPesquisa("")
+        setKeyAutocomplete(false)}
+        else {
+            setAlert("O valor do Sistema não pode ser menor que o Valor Promocional")
+            setOpen(true)
+        }
         } else {
             setAlert("Você deve adicionar algum item !")
             setOpen(true)

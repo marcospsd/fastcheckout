@@ -56,7 +56,7 @@ function SenhaVenda(data) {
             bold: true,
             columns: [
                 {
-                    text: 'Vendedor'
+                    text: 'Codigo Vend.'
                 },
                 {
                     text: 'Total da Venda'
@@ -78,6 +78,21 @@ function SenhaVenda(data) {
             ]
 
         },
+
+        {
+            margin: [0,2,0,0],
+            fontSize: 4,
+            alignment: 'justify',
+            bold: true,
+            text: 'Vendedor: '
+        },
+        {
+            fontSize: 4,
+            alignment: 'justify',
+            text: data.nomevendedor
+        },
+
+
         {
             margin: [0,2,0,0],
             fontSize: 4,
@@ -90,6 +105,110 @@ function SenhaVenda(data) {
             alignment: 'justify',
             text: data.nome
         },
+        
+
+        {
+            text: '--------------------------------------------------------',
+            fontSize: 4,
+            bold: true,
+            margin: [0,5,0,0],
+            alignment: 'center'
+        },
+
+        {
+            text: '-------- ORDEM DE SERVIÇO --------',
+            fontSize: 4,
+            bold: true,
+            margin: [0,30,0,0],
+            alignment: 'center'
+            
+        },
+
+
+        {
+            margin: [0,5,0,0],
+            fontSize: 4,
+            alignment: 'justify',
+            bold: true,
+            columns: [
+                {
+                    text: 'Ordem'
+                },
+                {
+                    text: 'CPF'
+                }
+            ]
+
+        },
+        {
+            fontSize: 4,
+            alignment: 'justify',
+            columns: [
+                {
+                    text: data.ordem
+                },
+                {
+                    text: (data.cpf).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+                }
+            ]
+
+        },
+        {
+            margin: [0,2,0,0],
+            fontSize: 4,
+            alignment: 'justify',
+            bold: true,
+            columns: [
+                {
+                    text: 'Codigo Vend.'
+                },
+                {
+                    text: 'Total da Venda'
+                }
+            ]
+
+        },
+        {
+            fontSize: 4,
+            alignment: 'justify',
+            columns: [
+                {
+                    text: data.vendedor
+                    
+                },
+                {
+                    text: parseInt(data.total_venda).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+                }
+            ]
+
+        },
+
+        {
+            margin: [0,2,0,0],
+            fontSize: 4,
+            alignment: 'justify',
+            bold: true,
+            text: 'Vendedor: '
+        },
+        {
+            fontSize: 4,
+            alignment: 'justify',
+            text: data.nomevendedor
+        },
+
+        {
+            margin: [0,2,0,0],
+            fontSize: 4,
+            alignment: 'justify',
+            bold: true,
+            text: 'Nome: '
+        },
+        {
+            fontSize: 4,
+            alignment: 'justify',
+            text: data.nome
+        },
+
         {
             text: '--------------------------------------------------------',
             fontSize: 4,

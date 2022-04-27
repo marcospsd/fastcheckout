@@ -12,7 +12,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import { CircularProgress } from "@mui/material";
 
-
+import Senha from '../../reports/senha';
 import ComprovanteVenda from '../../reports/venda';
 import { api, deleteVendas } from '../../services/api';
 
@@ -84,7 +84,6 @@ const HomePage = () => {
       const CriarVenda = (data) => {
           mutate()
       }
-    
 
 //// Conversão para Reais dos dados da Api    
     const Faturado = data.map(x => x.total_venda).reduce((a, b) => parseInt(a) + parseInt(b), 0)

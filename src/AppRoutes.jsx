@@ -5,6 +5,7 @@ import HomePage from "./pages/index/home";
 import { AuthProvicer, AuthContext } from "./contexts/auth";
 import { useContext } from "react";
 import ChartsView from "./pages/charts/charts";
+import EstoqueView from "./pages/estoque/estoque";
 
 
 
@@ -29,7 +30,8 @@ const AppRoutes = () => {
                 <Routes>
                     <Route exact path="/login" element={<LoginPage/>} />
                     <Route exact path="/" element={<Private><HomePage/></Private>} />
-                    <Route exact path="/charts" element={<ChartsView/>} />
+                    <Route exact path="/charts" element={<Private><ChartsView/></Private>} />
+                    <Route exact path="/estoque" element={<Private><EstoqueView/></Private>} />
                 </Routes>
             </AuthProvicer>
         </BrowserRouter>
