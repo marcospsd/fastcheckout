@@ -13,11 +13,11 @@ const ChartsView = () => {
     }
 
     return (
+
         <div className="container">
             { data && <ChartsBarra data={data}/>}
         </div>
         
-       
         )
 }
 

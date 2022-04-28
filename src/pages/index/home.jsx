@@ -9,6 +9,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import BasicModal from '../../components/Modal/ModalViewVenda'
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 import { CircularProgress } from "@mui/material";
 
@@ -19,12 +20,14 @@ import { api, deleteVendas } from '../../services/api';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 import ModalCreate from '../../components/Modal/ModalCreateVenda';
+import ModalFechamento from '../../components/Modal/ModalFechamentoDia';
 
 
 
 
 const HomePage = () => {
     const [open, setOpen] = React.useState(false);
+    const [openfech, setOpenFech] = React.useState(false)
     const openModal = () => { setOpen(prev => !prev)}
     const user = ((localStorage.getItem('nome')).replace('"', '').replace('"', '').toUpperCase()).toString()
     const [search, setSearch] = React.useState("");
@@ -105,6 +108,8 @@ const HomePage = () => {
         <div className="container">
             <img src={IMGFastCheckout} id="LogoFast"/>
             <IconButton onClick={() => handleLogout()} id="Sair"><LogoutIcon/></IconButton>
+            <IconButton onClick={() => setOpenFech(true)} id="Reports"><AssessmentIcon/></IconButton>
+            { openfech && <ModalFechamento openfech={openfech} setOpenFech={setOpenFech}/>}
             <div className="Diarios">
                 <div id="usuario">
                     <p className="title"><strong>Usuário</strong></p> 

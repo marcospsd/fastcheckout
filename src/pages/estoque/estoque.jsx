@@ -13,9 +13,8 @@ const EstoqueView = () => {
         return <p>Carregando ...</p>
     }
     const CheckedItem = async(item) => {
-        const response = await api.delete(`/api/v2/saidaprodutos/${item}/`)
-        console.log(response)
-        if (response.status === 204){
+        const response = await api.patch(`/api/v2/saidaprodutos/${item}/`, { visualizado: true})
+        if (response.status === 200){
             const newItem = data.filter((x) => x.id !== item)
             mutate(newItem, false)
         }

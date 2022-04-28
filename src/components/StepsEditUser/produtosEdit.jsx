@@ -34,7 +34,7 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
 
     const Adicionar = () => {
         if (codpro !== "") {
-            if (valorsis >= valorpro){
+            if (porcdesc >= 0){
             setForm({...formData, corpovenda: [
             ... formData.corpovenda,
             { 
