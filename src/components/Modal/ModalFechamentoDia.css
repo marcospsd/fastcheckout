@@ -1,4 +1,4 @@
-#box-fechamento {
+#box-fechamento-caixa {
     position: absolute;
     padding: 1.5rem;
     top: 50%;
@@ -15,5 +15,21 @@
     border-radius: 1.5rem;
     overflow: overlay;
     
+
+}
+
+.faturamentotot h3 {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    background-color: #c52f33;;
+    border-radius: 1.5rem;
+    color: white;
+}
+
+.button-print {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
 
 }

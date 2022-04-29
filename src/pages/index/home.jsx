@@ -37,7 +37,7 @@ const HomePage = () => {
         logout()
 
     };
-    
+    const usuario = localStorage.getItem('tipouser')
     if (!data) {
         return (
             <>
@@ -60,7 +60,7 @@ const HomePage = () => {
   
         
       const AprovarCompra = async (venda) => {
-        await api.put(`/api/v2/venda/${venda.ordem}/`, {...venda, status: 'F'})
+        await api.put(`/api/v2/venda/${venda.ordem}/`, {...venda, status: 'F' })
         .then((res) => ComprovanteVenda(venda))
         const updatedata = data.map((x) => {
             if (x.ordem == venda.ordem) {
@@ -73,7 +73,7 @@ const HomePage = () => {
       }
   
       const RetornaCompra = async (venda) => {
-        await api.put(`/api/v2/venda/${venda.ordem}/`, {...venda, status: 'P'})
+        await api.put(`/api/v2/venda/${venda.ordem}/`, {...venda, status: 'P' })
         const rev = data.map((x) => {
             if (x.ordem === venda.ordem) {
                 return { ...x, status: 'P'}
@@ -108,7 +108,7 @@ const HomePage = () => {
         <div className="container">
             <img src={IMGFastCheckout} id="LogoFast"/>
             <IconButton onClick={() => handleLogout()} id="Sair"><LogoutIcon/></IconButton>
-            <IconButton onClick={() => setOpenFech(true)} id="Reports"><AssessmentIcon/></IconButton>
+            {usuario === '"C"' ? <IconButton onClick={() => setOpenFech(true)} id="Reports"><AssessmentIcon/></IconButton>: null }
             { openfech && <ModalFechamento openfech={openfech} setOpenFech={setOpenFech}/>}
             <div className="Diarios">
                 <div id="usuario">
