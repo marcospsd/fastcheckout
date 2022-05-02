@@ -105,6 +105,7 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
         setOpen(false);
       };
 
+
     return (
         <div className="container-formapag">
             <div className='tittle-formapag'>
@@ -160,17 +161,16 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
                     >
                         
                         <MenuItem value="1">1</MenuItem>
-                        { total_venda > 200 && formapag === 'CC' && <MenuItem value="2">2</MenuItem> }
-                        { total_venda > 600 && formapag === 'CC' && <MenuItem value="3">3</MenuItem> }
-                        { total_venda > 800 && formapag === 'CC' && <MenuItem value="4">4</MenuItem> }
-                        { total_venda > 1000 && formapag === 'CC' && <MenuItem value="5">5</MenuItem> }
-                        { total_venda > 1200 && formapag === 'CC' && <MenuItem value="6">6</MenuItem> }
-                        { total_venda > 1400 && formapag === 'CC' && <MenuItem value="7">7</MenuItem> }
-                        { total_venda > 1600 && formapag === 'CC' && <MenuItem value="8">8</MenuItem> }
-                        { total_venda > 1800 && formapag === 'CC' && <MenuItem value="9">9</MenuItem> }
-                        { total_venda > 2000 && formapag === 'CC' && <MenuItem value="10">10</MenuItem> }
-
-                    
+                        { total_venda > 200 && formapag === 'CC' || localStorage.getItem('tipouser') === '"C"' ?  <MenuItem value="2">2</MenuItem> : null}
+                        { total_venda > 600 && formapag === 'CC' || localStorage.getItem('tipouser') === '"C"' ? <MenuItem value="3">3</MenuItem> : null}
+                        { total_venda > 800 && formapag === 'CC' || localStorage.getItem('tipouser') === '"C"' ? <MenuItem value="4">4</MenuItem> : null}
+                        { total_venda > 1000 && formapag === 'CC' || localStorage.getItem('tipouser') === '"C"' ? <MenuItem value="5">5</MenuItem> : null}
+                        { total_venda > 1200 && formapag === 'CC' || localStorage.getItem('tipouser') === '"C"' ? <MenuItem value="6">6</MenuItem> : null}
+                        { total_venda > 1400 && formapag === 'CC' || localStorage.getItem('tipouser') === '"C"' ? <MenuItem value="7">7</MenuItem> : null}
+                        { total_venda > 1600 && formapag === 'CC' || localStorage.getItem('tipouser') === '"C"' ? <MenuItem value="8">8</MenuItem> : null}
+                        { total_venda > 1800 && formapag === 'CC' || localStorage.getItem('tipouser') === '"C"' ? <MenuItem value="9">9</MenuItem> : null}
+                        { total_venda > 2000 && formapag === 'CC' || localStorage.getItem('tipouser') === '"C"' ? <MenuItem value="10">10</MenuItem> : null}
+                   
                     </Select>
                 </FormControl>
                 <TextField id="dump" label="Valor" type="number" onChange={(e) => setValor(e.target.value)} value={valor} fullWidth/>
@@ -199,7 +199,7 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
                 </table>
             </div>
             <div className="formpag-buttons">
-            <Button id='back-forma' onClick={() => navigation.previous()} variant="contained">Back</Button>
+            <Button id='back-forma' onClick={() => navigation.previous()} variant="contained">Voltar</Button>
             <Button id='next-forma' onClick={() => {
                 if (saldo == 0) {
                     setForm({...formData, total_venda: total_venda})
@@ -207,7 +207,7 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
                 } else {
                     setAlert("Saldo não pode ser diferente de 0 !")
                     setOpen(true)
-                }}} variant="contained">Next</Button>  
+                }}} variant="contained">Próximo</Button>  
  
             </div>
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>

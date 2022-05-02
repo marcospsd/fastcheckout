@@ -198,14 +198,14 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
             </div>
             )}
             <div className='buttons-products'>
-                <Button id='back' onClick={() => navigation.previous()} variant="contained">Back</Button>
+                <Button id='back' onClick={() => navigation.previous()} variant="contained">Voltar</Button>
                 <Button id='next' onClick={() => {
                     if (formData.corpovenda != "") {
                     navigation.next() 
                     } else { setAlert("Não pode ser vazio !")
                             setOpen(true)
                     }
-                }} variant="contained">Next</Button>
+                }} variant="contained">Próximo</Button>
 
             </div>
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} fullWidth>

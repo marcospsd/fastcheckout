@@ -1,6 +1,5 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import OTDZ from '../statics/FAST.png'
 
 
 function ComprovanteVenda(data) {
@@ -266,7 +265,200 @@ function ComprovanteVenda(data) {
             fit: '50',
             alignment: 'center'
         },
-        
+        {
+            text: '--------------------------------------------------------',
+            fontSize: 4,
+            bold: true,
+            margin: [0,5,0,0],
+            alignment: 'center'
+        },
+
+        {
+            text: 'TERMO DE CONSENTIMENTO PARA ARMAZENAMENTO E TRATAMENTO DE DADOS PESSOAIS EM CONFORMIDADE COM A LEI Nº 13.709 (LGPD)',
+            fontSize: 4,
+            bold: true,
+            margin: [0,20,0,0],
+            alignment: 'center'
+            
+        },
+
+        {
+            text: 'Solicitamos o expresso consentimento para coletarmos, tratarmos e armazenarmos seus dados quando julgarmos necessários a prestação de nossos serviços, tais como: nome e sobrenome, endereço para correspondência, endereço de e-mail, informações de pagamento, bem como outras informações de contato on-line ou número de telefone, foto e demais informações requeridas no cadastro. Podemos registrar e gravar todos os dados fornecidos em toda comunicação realizada com nossa equipe, seja por correio eletrônico, mensagens, telefone ou qualquer outro meio. Ao submeter seus dados para pagamento, podemos coletar informações sobre a compra ou transação. Isso abrange suas informações de pagamento, informações de conta e autenticação, além dos dados de faturamento, tais como endereço completo CPF e RG. Compartilhamos seus dados com terceiros, a um tribunal, reguladores ou agências governamentais. Todo os dados que você nos fornece são tratados unicamente para atingir as finalidades acima listadas. Estes dados são armazenados em servidores seguros nossos ou de fornecedores contratados, acessando e utilizados de acordo com nossas políticas e padrões de segurança. Todo o tráfego entre nossos servidores ou entre o seu computador e nossos servidores é encriptado através do protocolo seguro SSL ou semelhante. Nós manteremos as informações que coletamos de você até que ocorra a solicitação de exclusão definitiva por sua parte. Você pode solicitar informações, alteração, esclarecimentos ou exclusão de seus dados por meio do contato: LGPD@DINIZVITORIA.COM.BR',
+            fontSize: 4,
+            margin: [2,5,2,0],
+            alignment: 'justify'
+            
+        },
+
+        {
+            text: 'Eu '+ data.nome +',',
+            fontSize: 4,
+            margin: [2,8,2,0],
+            alignment: 'justify'
+        },
+        {
+            text: 'Incrito sob o CPF: ' + (data.cpf).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"),
+            fontSize: 4,
+            margin: [2,4,2,0],
+            alignment: 'justify'
+        },
+        {
+            text: '(  ) Aceito      (  ) Não Aceito',
+            fontSize: 4,
+            margin: [2,4,2,0],
+            alignment: 'justify'
+        },
+        {
+            text: '____________________________________________',
+            fontSize: 4,
+            margin: [2,10,2,0],
+            alignment: 'center'
+        },
+        {
+            text: 'Assinatura',
+            fontSize: 4,
+            margin: [2,1,2,0],
+            alignment: 'center'            
+        },
+        {
+            text: '--------------------------------------------------------',
+            fontSize: 4,
+            bold: true,
+            margin: [0,10,0,0],
+            alignment: 'center'
+        },
+        {
+            margin: [0,5,0,0],
+            fontSize: 4,
+            alignment: 'justify',
+            bold: true,
+            columns: [
+                {
+                    text: 'Ordem'
+                },
+                {
+                    text: 'CPF'
+                }
+            ]
+
+        },
+        {
+            fontSize: 4,
+            alignment: 'justify',
+            columns: [
+                {
+                    text: data.ordem
+                },
+                {
+                    text: (data.cpf).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+                }
+            ]
+
+        },
+        {
+            margin: [0,2,0,0],
+            fontSize: 4,
+            alignment: 'justify',
+            bold: true,
+            columns: [
+                {
+                    text: 'Vendedor'
+                },
+                {
+                    text: 'Total da Venda'
+                }
+            ]
+
+        },
+        {
+            fontSize: 4,
+            alignment: 'justify',
+            columns: [
+                {
+                    text: data.vendedor
+                    
+                },
+                {
+                    text: parseInt(data.total_venda).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+                }
+            ]
+
+        },
+        {
+            margin: [0,2,0,0],
+            fontSize: 4,
+            alignment: 'justify',
+            bold: true,
+            text: 'Nome: '
+        },
+        {
+            fontSize: 4,
+            alignment: 'justify',
+            text: data.nome
+        },
+
+        {
+            fontSize: 4,
+            alignment: 'center',
+            margin: [0,3,0,0],
+            columns: [
+                {
+                    text: 'Forma'
+                },
+                {
+                    text: 'Parcelas'
+                },
+                {
+                    text: 'Valor'
+                }
+            ]
+
+        },
+        {
+            text: '_________________________________________',
+            fontSize: 4,
+            alignment: 'center'
+        },
+        data.formavenda.map((formapag) => (
+            {
+                fontSize: 4,
+                alignment: 'center',
+                margin: [0,2,0,0],
+                columns: [
+                    {
+                        text: formapagamento(formapag.forma)
+                    },
+                    {
+                        text: formapag.parcelas
+                    },
+                    {
+                        text: parseInt(formapag.valor).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+                    }
+                ]
+            }
+        )),
+
+        {
+            text: '--------------------------------------------------------',
+            fontSize: 4,
+            bold: true,
+            margin: [0,5,0,0],
+            alignment: 'center'
+        },
+        {
+            text: 'Grampeie Etiquetas e Comprovantes de Transações aqui...',
+            fontSize: 3,
+            margin: [0,40,0,0],
+            alignment: 'center'
+        },
+        {
+            text: '--------------------------------------------------------',
+            fontSize: 4,
+            bold: true,
+            margin: [0,50,0,0],
+            alignment: 'center'
+        },
+
 
     ];
 

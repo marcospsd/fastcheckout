@@ -180,13 +180,16 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                             }
                         }
                         
-                    }}>Proximo</Button>
+                    }}>Próximo</Button>
+
                 </div>
+
                 <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error" sx={{ width: '90%' }}>
                         {alert}
                     </Alert>
                 </Snackbar>
+                
         </div>
     )
 }

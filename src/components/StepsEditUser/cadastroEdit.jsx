@@ -178,7 +178,7 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                             }
                         }
                         
-                    }}>Proximo</Button>
+                    }}>Próximo</Button>
                 </div>
 
         </div>

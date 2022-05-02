@@ -106,6 +106,7 @@ const HomePage = () => {
 
     return (
         <div className="container">
+           
             <img src={IMGFastCheckout} id="LogoFast"/>
             <IconButton onClick={() => handleLogout()} id="Sair"><LogoutIcon/></IconButton>
             {usuario === '"C"' ? <IconButton onClick={() => setOpenFech(true)} id="Reports"><AssessmentIcon/></IconButton>: null }

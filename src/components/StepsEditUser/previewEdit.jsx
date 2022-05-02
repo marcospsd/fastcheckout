@@ -93,7 +93,7 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, criarv
                 </table>
               </div>
               <div id='opcoes-preview'>
-                <Button id='back-forma' onClick={() => navigation.previous()} variant="contained">Back</Button>
+                <Button id='back-forma' onClick={() => navigation.previous()} variant="contained">Revisar</Button>
                 <Button id='back-forma' onClick={async () => {
                     console.log(formData)
                     await api.put(`/api/v2/venda/${formData.ordem}/`, formData )

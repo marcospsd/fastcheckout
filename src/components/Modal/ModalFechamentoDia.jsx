@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import {useFetch} from '../../hooks/useFetch';
 import _ from 'lodash'
 import './ModalFechamentoDia.css'
-import { fontSize } from '@mui/system';
+import FechamentoCaixa from '../../reports/fechamento';
 
 
 const ModalFechamento = ({ openfech, setOpenFech}) => {
@@ -72,7 +72,7 @@ const ModalFechamento = ({ openfech, setOpenFech}) => {
                   >
                       <div className="fechamento-dia">
                         <div className="faturamentotot">
-                            <h3>Faturamento Dia </h3>
+                            <h3>Resumo Diário</h3>
                         </div>
                         <p><b>Dinheiro: </b>{FatDH()}</p>
                         <p><b>Deposito em Conta: </b>{FatDP()}</p>
@@ -80,9 +80,9 @@ const ModalFechamento = ({ openfech, setOpenFech}) => {
                         <p><b>Cartão de Débito: </b>{FatCD()}</p>
                         <hr></hr>
                         <p><b>Total: </b>{Fattotal()}</p>
-                        <div className="button-print" sx={{ fontSize: 40}}>
-                            <IconButton>
-                                <PrintIcon/>
+                        <div className="button-print" >
+                            <IconButton onClick={() => FechamentoCaixa(data)}>
+                                <PrintIcon sx={{ fontSize: 40}}/>
                             </IconButton>
                         </div>
                       </div>
