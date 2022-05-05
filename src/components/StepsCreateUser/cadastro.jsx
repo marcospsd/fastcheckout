@@ -12,15 +12,13 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-export const CadastroForm = ({ formData, setForm, navigation }) => {
+export const CadastroForm = ({ formData, setForm, navigation, userbanco, setUserBanco }) => {
     const [ nome, setNome ] = useState(formData.nome)
     const [ cpf, setCPF ] = useState(formData.cpf)
     const [ telefone, setTelefone ] = useState(formData.telefone)
     const [ email, setEmail ] = useState(formData.email)
-    const [ userbanco, setUserBanco] = useState(false)
     const [ open, setOpen] = useState(false)
     const [ alert, setAlert] = useState('')
-
 
 
     const BuscaCPF = (ev) => {
@@ -28,9 +26,6 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
         const data = value?.replace(/[^0-9]/g, '')
         if ( data.length !== 11) {
             return;
-        }
-        if (data == '99999999999') {
-            return
         } else {
             api.get(`/api/v2/cliente/${data}/`)
             .then((res) => {
@@ -47,17 +42,21 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
 
     }
 
-    function CriarUsuario(nome, cpf, email, telefone) {
-        api.post('/api/v2/cliente/', { cpf, nome, email, telefone })
+    // function CriarUsuario(nome, cpf, email, telefone) {
+    //     api.post('/api/v2/cliente/', { cpf, nome, email, telefone })
         
-    }
+    // }
+
+    // const AtualizaUsuario = () => {
+    //     api.put('/api/v2/cliente/', { cpf: cpf, nome: nome, email: email, telefone: telefone})
+    // }
 
     function ValidatedCPF(cpf) {
         const cpfdata = cpf?.replace(/[^0-9]/g, '')
-        if (cpfdata == '99999999999') {
+        if (cpfdata === '99999999999') {
             return true;
         } else {
-            if (cpfdata.length == 11) {
+            if (cpfdata.length === 11) {
             return CPFValidated.isValid(cpfdata)
             }
         }
@@ -71,7 +70,6 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
     
         setOpen(false);
       };
-
     return (
         <div className='container-cadastro'>
             <p id='cadastro-tittle'>Cadastro</p>
@@ -80,7 +78,7 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
             <InputMask
                 mask="999.999.999-99"
                 onBlur={(e) => {
-                    if (ValidatedCPF(e.target.value) == true) {
+                    if (ValidatedCPF(e.target.value) === true) {
                         BuscaCPF(e)
                     } else {
                         setAlert("CPF Inválido !")
@@ -152,7 +150,7 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                             setOpen(true)
                             return;
                         }
-                        if (ValidatedCPF(cpf) == false) {
+                        if (ValidatedCPF(cpf) === false) {
                             setAlert('CPF inválido !')
                             setOpen(true)
                             return;
@@ -172,11 +170,17 @@ export const CadastroForm = ({ formData, setForm, navigation }) => {
                         if (cpf.replace(/[^0-9]/g, '') === '99999999999') {
                             navigation.next()
                         } else {
-                            if (userbanco == false) {
-                            CriarUsuario(nome, cpf, email, telefone)
-                            navigation.next() 
+                            if (userbanco === false) {
+                                api.post('/api/v2/cliente/', { cpf: cpf, nome: nome, email: email, telefone: telefone })
+                                .then((res) => {
+                                    setUserBanco(true)
+                                    navigation.next() 
+                                })
                             } else {
-                            navigation.next()   
+                                api.patch(`/api/v2/cliente/${cpf.replace(/[^0-9]/g, '')}/`, { nome: nome, email: email, telefone: telefone})
+                                .then((res) => {
+                                    navigation.next()   
+                                })
                             }
                         }
                         

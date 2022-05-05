@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './ModalCreateVenda.css'
-import { useForm, useStep } from 'react-hooks-helper';
+import { useStep } from 'react-hooks-helper';
 import { CadastroForm } from '../StepsCreateUser/cadastro';
 import { ProdutosForm } from '../StepsCreateUser/produtos';
 import { FormaPagForm } from '../StepsCreateUser/formapag';
@@ -36,6 +36,7 @@ const ModalCreate = ({open, setOpen, criarvenda}) => {
         nomevendedor: nomevendedor,
     }
     const [formData, setForm] = useState(state)
+    const [ userbanco, setUserBanco] = useState(false)
     const { step, navigation } = useStep({
         steps, initialStep: 0
     })
@@ -47,9 +48,10 @@ const ModalCreate = ({open, setOpen, criarvenda}) => {
     function CloseModal() {
         setOpen(false)
         setForm(state)
+        setUserBanco(false)
     }
     
-    const props = { formData, setForm, navigation, fecharModal, state, createvenda }
+    const props = { formData, setForm, navigation, fecharModal, state, createvenda, userbanco, setUserBanco }
     switch(step.id) {
         case 'cadastro':
             return (

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './ModalCreateVenda.css'
-import { useForm, useStep } from 'react-hooks-helper';
+import { useStep } from 'react-hooks-helper';
 import { CadastroForm } from '../StepsEditUser/cadastroEdit';
 import { ProdutosForm } from '../StepsEditUser/produtosEdit';
 import { FormaPagForm } from '../StepsEditUser/formapagEdit';
@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { api } from '../../services/api';
+
 
 
 const steps = [
@@ -21,9 +21,8 @@ const steps = [
 ]
 
  const ModalEdit = ({openedit, setOpenEdit, value, criarvenda}) => {
-  const codvend = (localStorage.getItem('codvend')).replace('"', '').replace('"', '')
-  const nomevendedor = (localStorage.getItem('nome')).replace('"', '').replace('"', '').toLocaleUpperCase()
   const [formData, setForm] = useState(value)
+  const [ userbanco, setUserBanco] = useState(true)
   const { step, navigation } = useStep({
       steps, initialStep: 0
   })
@@ -36,10 +35,11 @@ const steps = [
 
   function CloseModal() {
     setOpenEdit(false)
-      setForm(value)
+    setUserBanco(true)
+    setForm(value)
   }
 
-  const props = { formData, setForm, navigation, fecharModal, value, criarvenda}
+  const props = { formData, setForm, navigation, fecharModal, value, criarvenda, userbanco, setUserBanco}
   switch(step.id) {
       case 'cadastro':
           return (

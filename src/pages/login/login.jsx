@@ -27,7 +27,7 @@ const LoginPage = () => {
             <img src={ LogoDNZ } id="imgLogoDNZ"/>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="field">
-                    <TextField fullWidth label="Usuario" variant="outlined" type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)}
+                    <TextField fullWidth label="Usuario" autoComplete='off' variant="outlined" type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)}
                                InputProps={{
                                 startAdornment: (
                                   <InputAdornment position="start">
@@ -37,7 +37,7 @@ const LoginPage = () => {
                               }}/>
                 </div>
                 <div className="field">
-                    <TextField fullWidth label="Senha" variant="outlined"  type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                    <TextField fullWidth label="Senha" autoComplete='off' variant="outlined"  type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}
                                 InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
