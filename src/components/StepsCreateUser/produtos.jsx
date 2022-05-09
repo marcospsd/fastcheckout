@@ -76,8 +76,11 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
         if (pesquisa !== "") {
             api.get(`/api/v1/produto/${pesquisa}`)
             .then((res) => {
-                setResultado(res.data)
-                
+                if (Array.isArray(res.data)){
+                    setResultado(res.data) 
+                } else {
+                    setResultado([])
+                }   
             })
         }
         return;
