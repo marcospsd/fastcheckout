@@ -1,3 +1,4 @@
+import { DomainVerificationRounded } from '@mui/icons-material';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -30,7 +31,14 @@ function ComprovanteVenda(data) {
         }
     }
 
-
+    const Dias = (dado) => {
+        switch (dado) {
+            case true:
+                return "365 Dias"
+            case false:
+                return "90 Dias"
+        }
+    }
 
 
     const titulo = [];
@@ -265,6 +273,38 @@ function ComprovanteVenda(data) {
             fit: '50',
             alignment: 'center'
         },
+
+        {
+            text: 'GARANTIAS',
+            fontSize: 5,
+            margin: [0,5,0,0],
+            alignment: 'center'
+        },
+        
+        data.corpovenda.map((corpo) => ( 
+            {
+                fontSize: 3.7,
+                alignment: 'center',
+                margin: [0,2,0,0],
+                columns: [
+                    {
+                        text: corpo.codpro
+                    },
+                    {
+                        text: corpo.descripro
+                    },
+                    {
+                        text: Dias(corpo.reposicao)
+                    }
+                ]
+            }
+
+
+
+        )),
+
+
+
         {
             text: '--------------------------------------------------------',
             fontSize: 4,
