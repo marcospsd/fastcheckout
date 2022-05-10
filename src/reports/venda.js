@@ -265,19 +265,20 @@ function ComprovanteVenda(data) {
         {
             text: 'Siga nossas redes sociais e fique por dentro de todas novidades.',
             fontSize: 4,
-            alignment: 'center'
+            alignment: 'center',
+            margin: [0,0,0,0],
         },
         {
-            margin: [0,5,0,0],
+            margin: [0,10,0,0],
             qr: 'https://www.instagram.com/oticasdinizvitoria/',
-            fit: '50',
+            fit: '40',
             alignment: 'center'
         },
 
         {
             text: 'GARANTIAS',
             fontSize: 5,
-            margin: [0,5,0,0],
+            margin: [0,10,0,0],
             alignment: 'center'
         },
         
@@ -294,7 +295,7 @@ function ComprovanteVenda(data) {
                         text: corpo.descripro
                     },
                     {
-                        text: Dias(corpo.reposicao)
+                        text: Dias(corpo.complementos.reposicao)
                     }
                 ]
             }
@@ -349,9 +350,9 @@ function ComprovanteVenda(data) {
             alignment: 'justify'
         },
         {
-            text: '____________________________________________',
+            text: '_________________________________________',
             fontSize: 4,
-            margin: [2,10,2,0],
+            margin: [2,17,2,0],
             alignment: 'center'
         },
         {
@@ -506,10 +507,10 @@ function ComprovanteVenda(data) {
 
     const docDefinitions = {
         pageSize: {
-            width: 90,
-            height: 400,
+            width: 80,
+            height: 300,
         },
-        pageMargins: [0, 0, 0, 0],
+        pageMargins: [0, 5, 0, 0],
         
 
         header: [titulo],
