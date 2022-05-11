@@ -224,7 +224,7 @@ function SenhaVenda(data) {
     const docDefinitions = {
         pageSize: {
             width: 80,
-            height: 400,
+            height: 300,
         },
         pageMargins: [1, 0, 1, 0],
 

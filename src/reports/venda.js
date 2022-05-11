@@ -271,17 +271,25 @@ function ComprovanteVenda(data) {
         {
             margin: [0,10,0,0],
             qr: 'https://www.instagram.com/oticasdinizvitoria/',
-            fit: '40',
+            fit: '50',
             alignment: 'center'
         },
 
         {
-            text: 'GARANTIAS',
+            text: 'PRODUTOS SEM TROCA',
             fontSize: 5,
             margin: [0,10,0,0],
             alignment: 'center'
         },
         
+        {
+            text: 'GARANTIA CONTRA DEFEITOS DE FABRICAÇÃO',
+            fontSize: 4,
+            margin: [0,10,0,0],
+            alignment: 'center'
+        },
+
+
         data.corpovenda.map((corpo) => ( 
             {
                 fontSize: 3.7,

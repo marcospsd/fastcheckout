@@ -16,6 +16,10 @@
     overflow: overlay;
 }
 
+#box-view-itens::-webkit-scrollbar {
+    width: 0px;
+}
+
 #tittle-modal {
     display: flex;
     justify-content: center;
