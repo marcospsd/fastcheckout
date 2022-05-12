@@ -21,6 +21,7 @@ import ComprovanteVenda from '../../reports/venda';
     const criarvenda = props.criarvenda
     const [open, setOpen] = React.useState(false);
     const [openedit, setOpenEdit] = React.useState(false);
+    const [loading, setLoading] = React.useState(false)
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     // const { mutate } = useSWRConfig();
@@ -59,12 +60,12 @@ import ComprovanteVenda from '../../reports/venda';
             }}><EditIcon/></IconButton>
           
 
-          <IconButton onClick={ async () => {
-            props.aprovarcompra(data)
-            handleClose()
-            
+               {localStorage.getItem('tipouser') === '"C"' ? <IconButton onClick={ async () => {
+                  props.aprovarcompra(data)
+                  handleClose()
+                  
 
-          }}><FactCheckIcon/></IconButton>
+                }}><FactCheckIcon/></IconButton> : null} 
 
           <IconButton onClick={() => {
             if(window.confirm("Deseja excluir essa venda ?")) {
@@ -82,10 +83,10 @@ import ComprovanteVenda from '../../reports/venda';
         case "F":
           return (
             <>
-            <IconButton onClick={() => {
-              handleClose()
-              props.retornarcompra(data)}
-              }><SettingsBackupRestoreIcon /></IconButton>
+            {localStorage.getItem('tipouser') === '"C"' ? <IconButton onClick={() => {
+                  handleClose()
+                  props.retornarcompra(data)}
+                  }><SettingsBackupRestoreIcon /></IconButton> : null }
            
             <IconButton onClick={() => {
               handleClose()
@@ -125,7 +126,7 @@ import ComprovanteVenda from '../../reports/venda';
             
                 </div>
                 <div className='col'>
-                  <label><strong>Vendedor: </strong> {data.vendedor}</label>
+                  <label><strong>Vendedor: </strong> {data.nomevendedor.split(' ').slice(0, 1).join(' ')}</label>
                   <label><strong>Total da Venda: </strong>{parseInt(data.total_venda).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</label>
                 </div>
               </div>

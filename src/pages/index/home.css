@@ -55,6 +55,13 @@ body {
 
 }
 
+.container #finalizadasvoltar {
+    position: absolute;
+    top: 1rem;
+    left: 45%;
+    right: 45%;
+}
+
 .Diarios {
     display: flex;
     flex-direction: row;

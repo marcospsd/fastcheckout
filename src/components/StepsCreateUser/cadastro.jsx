@@ -176,10 +176,18 @@ export const CadastroForm = ({ formData, setForm, navigation, userbanco, setUser
                                     setUserBanco(true)
                                     navigation.next() 
                                 })
+                                .catch((err) => {
+                                    setAlert("Erro de requisição")
+                                    setOpen(true)
+                                })
                             } else {
                                 api.patch(`/api/v2/cliente/${cpf.replace(/[^0-9]/g, '')}/`, { nome: nome, email: email, telefone: telefone})
                                 .then((res) => {
                                     navigation.next()   
+                                })
+                                .catch((err) => {
+                                    setAlert("Erro de requisição")
+                                    setOpen(true)
                                 })
                             }
                         }

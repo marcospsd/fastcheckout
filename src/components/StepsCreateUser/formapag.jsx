@@ -67,6 +67,9 @@ export const FormaPagForm = ({ formData, setForm, navigation }) => {
 
     const SelecaoParcela = (id) => {
         switch (id) {
+            case "CC":
+                    setParcelas("1")
+                    
             case "DH":
                     setParcelas("1")
 

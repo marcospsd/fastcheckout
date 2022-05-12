@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { AuthContext } from "../../contexts/auth";
-import { useFetch } from "../../hooks/useFetch";
+import { useFetchNormal } from "../../hooks/useFetch";
 import IMGFastCheckout from "../../statics/FAST.png"
-import "./home.css"
+import "../index/home.css"
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -27,13 +27,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const HomePage = () => {
+const HomePageVendedores = () => {
     const [open, setOpen] = React.useState(false);
     const [openfech, setOpenFech] = React.useState(false)
     const openModal = () => { setOpen(prev => !prev)}
     const user = ((localStorage.getItem('nome')).replace('"', '').replace('"', '').toUpperCase()).toString()
     const [search, setSearch] = React.useState("");
-    const { data, mutate } = useFetch('/api/v2/venda/');
+    const { data, mutate } = useFetchNormal('/api/v2/venda/');
     const { logout } = React.useContext(AuthContext);
     const navigate = useNavigate()
     const handleLogout = () => {
@@ -174,4 +174,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default HomePageVendedores;

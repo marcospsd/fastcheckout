@@ -4,6 +4,7 @@ import "../Modal/ModalViewVenda"
 import Button from '@mui/material/Button';
 import {api} from '../../services/api'
 import SenhaVenda from '../../reports/senha'
+import LoadingButton from '@mui/lab/LoadingButton';
 
 
 import Snackbar from '@mui/material/Snackbar';
@@ -16,6 +17,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state, createvenda}) => {
   const [ openmodal, setOpenModal] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [ alert, setAlert] = useState('')
 
   const formapagamento = (id) => {
@@ -30,8 +32,6 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state,
             return "PIX"
         }
 }
-
-  console.log(formData)
     return (
         <div className="container-preview">
               <div id='tittle-modal'>
@@ -94,19 +94,23 @@ export const PreviewForm = ({ formData, setForm, navigation, fecharModal, state,
               </div>
               <div id='opcoes-preview'>
                 <Button id='back-forma' onClick={() => navigation.previous()} variant="contained">Revisar</Button>
-                <Button id='back-forma' onClick={async () => {
+                <Button id='back-forma' disabled={loading} onClick={async () => {
+                    setLoading(true)
                     await api.post(`/api/v2/venda/`, formData)
                     .then((res) => {
                       if (res.status !== 201) {
                         setAlert("Algo deu errado !")
                         setOpenModal(true)
+                        setLoading(false)
                       } else {
                         SenhaVenda(res.data)
                         createvenda(formData)
                         fecharModal()
                         navigation.next()
                         setForm(state)
+                        
                       }
+                    
                     })
                 }} variant="contained">Enviar</Button>
               </div>

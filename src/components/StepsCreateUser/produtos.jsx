@@ -74,14 +74,20 @@ export const ProdutosForm = ({ formData, setForm, navigation }) => {
     const Pesquisar = async (pesquisa) => {
         setPesquisa(pesquisa)
         if (pesquisa !== "") {
-            api.get(`/api/v1/produto/${pesquisa}`)
-            .then((res) => {
-                if (Array.isArray(res.data)){
-                    setResultado(res.data) 
-                } else {
-                    setResultado([])
-                }   
-            })
+            if (pesquisa.length >= 4){
+
+                api.get(`/api/v1/produto/${pesquisa}`)
+                .then((res) => {
+                    if (Array.isArray(res.data)){
+                        setResultado(res.data) 
+                    } else {
+                        setResultado([])
+                    }   
+                })
+
+
+            }
+
         }
         return;
     }

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { AuthContext } from "../../contexts/auth";
-import { useFetch } from "../../hooks/useFetch";
+import { useFetchNormal } from "../../hooks/useFetch";
 import IMGFastCheckout from "../../statics/FAST.png"
-import "./home.css"
+import "../index/home.css"
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -10,7 +10,7 @@ import BasicModal from '../../components/Modal/ModalViewVenda'
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { CircularProgress } from "@mui/material";
 
@@ -26,14 +26,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-
-const HomePage = () => {
+const Finalizados = () => {
     const [open, setOpen] = React.useState(false);
     const [openfech, setOpenFech] = React.useState(false)
     const openModal = () => { setOpen(prev => !prev)}
     const user = ((localStorage.getItem('nome')).replace('"', '').replace('"', '').toUpperCase()).toString()
     const [search, setSearch] = React.useState("");
-    const { data, mutate } = useFetch('/api/v2/venda/');
+    const { data, mutate } = useFetchNormal('/api/v2/vendafinalizada/');
     const { logout } = React.useContext(AuthContext);
     const navigate = useNavigate()
     const handleLogout = () => {
@@ -55,7 +54,7 @@ const HomePage = () => {
     }
 
     const AcaoDeletar = async (id) => {
-            await api.delete(`/api/v2/venda/${id}/`)
+            await api.delete(`/api/v2/vendafinalizada/${id}/`)
             const updatedata = data.filter((x) => x.ordem !== id)
             mutate(updatedata, false)
 
@@ -63,7 +62,7 @@ const HomePage = () => {
   
         
       const AprovarCompra = async (venda) => {
-        await api.put(`/api/v2/venda/${venda.ordem}/`, {...venda, status: 'F' })
+        await api.put(`/api/v2/vendafinalizada/${venda.ordem}/`, {...venda, status: 'F' })
         .then((res) => ComprovanteVenda(venda))
         const updatedata = data.map((x) => {
             if (x.ordem == venda.ordem) {
@@ -76,7 +75,7 @@ const HomePage = () => {
       }
   
       const RetornaCompra = async (venda) => {
-        await api.put(`/api/v2/venda/${venda.ordem}/`, {...venda, status: 'P' })
+        await api.put(`/api/v2/vendafinalizada/${venda.ordem}/`, {...venda, status: 'P' })
         const rev = data.map((x) => {
             if (x.ordem === venda.ordem) {
                 return { ...x, status: 'P'}
@@ -112,9 +111,30 @@ const HomePage = () => {
            
             <img src={IMGFastCheckout} id="LogoFast"/>
             <IconButton onClick={() => handleLogout()} id="Sair"><LogoutIcon/></IconButton>
-            <IconButton onClick={() => navigate("/vendasfinalizadas")} id="finalizadasvoltar"><CheckCircleIcon/></IconButton>
+            <IconButton onClick={() => {
+                if (localStorage.getItem('tipouser') === '"C"') {
+                    navigate("/")
+                } else {
+                    navigate("/vendedores")
+                }
+                
+            }} id="finalizadasvoltar"><ArrowBackIcon/></IconButton>
             {usuario === '"C"' ? <IconButton onClick={() => setOpenFech(true)} id="Reports"><AssessmentIcon/></IconButton>: null }
             { openfech && <ModalFechamento openfech={openfech} setOpenFech={setOpenFech}/>}
+            <div className="Diarios">
+                <div id="usuario">
+                    <p className="title"><strong>Usuário</strong></p> 
+                    <p className="response">{user.split(' ').slice(0, 2).join(' ')}</p>
+                </div>    
+                <div id="totalvendas">
+                    <p className="title"><strong>Faturamento</strong></p>
+                    <p className="response">{Reais}</p>
+                </div>
+                <div id="quantvendas">
+                    <p className="title"><strong>Vendas</strong></p>
+                    <p className="response">{QuantidadeTotal}</p>
+                </div>
+            </div>
             <div className="menu">
                 <IconButton id="addvenda" aria-label="add to shopping cart" size="large" onClick={openModal}><ModalCreate/>
                     <AddShoppingCartIcon fontSize="inherit"/>
@@ -174,4 +194,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default Finalizados;

@@ -4,14 +4,14 @@ import Box from '@mui/material/Box';
 import IconButton  from '@mui/material/IconButton';
 import PrintIcon from '@mui/icons-material/Print';
 import CloseIcon from '@mui/icons-material/Close';
-import {useFetch} from '../../hooks/useFetch';
+import {useFetchNormal} from '../../hooks/useFetch';
 import _ from 'lodash'
 import './ModalFechamentoDia.css'
 import FechamentoCaixa from '../../reports/fechamento';
 
 
 const ModalFechamento = ({ openfech, setOpenFech}) => {
-    const {data} = useFetch(`/api/v2/formavenda/`)
+    const {data} = useFetchNormal(`/api/v2/formavenda/`)
 
     const Fattotal = () => {
         try {

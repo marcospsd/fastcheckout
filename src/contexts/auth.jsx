@@ -55,7 +55,7 @@ export const AuthProvicer = ({children}) => {
                 navigate("/")
                 break
             case "V":
-                navigate("/")
+                navigate("/vendedores")
                 break
             case "E":
                 navigate("/estoque")
