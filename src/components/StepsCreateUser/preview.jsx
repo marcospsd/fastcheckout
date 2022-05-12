@@ -4,7 +4,6 @@ import "../Modal/ModalViewVenda"
 import Button from '@mui/material/Button';
 import {api} from '../../services/api'
 import SenhaVenda from '../../reports/senha'
-import LoadingButton from '@mui/lab/LoadingButton';
 
 
 import Snackbar from '@mui/material/Snackbar';
