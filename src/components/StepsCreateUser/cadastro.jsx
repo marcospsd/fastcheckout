@@ -20,7 +20,7 @@ export const CadastroForm = ({ formData, setForm, navigation, userbanco, setUser
     const [ open, setOpen] = useState(false)
     const [ alert, setAlert] = useState('')
 
-
+    console.log(userbanco)
     const BuscaCPF = (ev) => {
         const {value} = ev.target
         const data = value?.replace(/[^0-9]/g, '')
@@ -36,6 +36,7 @@ export const CadastroForm = ({ formData, setForm, navigation, userbanco, setUser
             
             })
             .catch((error) => {
+                setUserBanco(false)
                 return;
             })
         }
@@ -177,7 +178,7 @@ export const CadastroForm = ({ formData, setForm, navigation, userbanco, setUser
                                     navigation.next() 
                                 })
                                 .catch((err) => {
-                                    setAlert("Erro de requisição")
+                                    setAlert("Erro de requisição, verifique o E-mail se possui dados inválidos.")
                                     setOpen(true)
                                 })
                             } else {
@@ -186,7 +187,7 @@ export const CadastroForm = ({ formData, setForm, navigation, userbanco, setUser
                                     navigation.next()   
                                 })
                                 .catch((err) => {
-                                    setAlert("Erro de requisição")
+                                    setAlert("Erro de requisição, verifique o E-mail se possui dados inválidos.")
                                     setOpen(true)
                                 })
                             }

@@ -38,6 +38,7 @@ export const CadastroForm = ({ formData, setForm, navigation, userbanco, setUser
             
             })
             .catch((error) => {
+                setUserBanco(false)
                 return;
             })
         }
@@ -174,7 +175,7 @@ export const CadastroForm = ({ formData, setForm, navigation, userbanco, setUser
                                     navigation.next() 
                                 })
                                 .catch((err) => {
-                                    setAlert("Erro de requisição")
+                                    setAlert("Erro de requisição, verifique o E-mail se possui dados inválidos.")
                                     setOpen(true)
                                 })
                             } else {
@@ -183,7 +184,7 @@ export const CadastroForm = ({ formData, setForm, navigation, userbanco, setUser
                                     navigation.next()   
                                 })
                                 .catch((err) => {
-                                    setAlert("Erro de requisição")
+                                    setAlert("Erro de requisição, verifique o E-mail se possui dados inválidos.")
                                     setOpen(true)
                                 })
                             }
